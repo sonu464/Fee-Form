@@ -1,0 +1,48 @@
+@media (min-width: 300px) and (max-width: 600px) {
+  body {
+    padding: 0;
+  }
+
+  /* --------------- Logo -------------- */
+  .logo {
+    width: 70px;
+    height: 70px;
+  }
+
+  /* ---------------Top Box ---------------*/
+
+  .container {
+    width: 100%;
+    /* box-shadow: none; */
+  }
+
+  .institute-name {
+    align-items: flex-start;
+    height: 70px;
+  }
+
+  .institute-name h1 {
+    font-size: 15px;
+  }
+
+  .institute-name h3 {
+    font-size: 13px;
+  }
+
+  .top-down {
+    margin-top: 5px;
+    width: 90%;
+  }
+
+  .voucher-box h4,
+  .head-box h4,
+  .t-right h4 {
+    font-size: 12px;
+  }
+
+  #voucher,
+  #head,
+  #date {
+    font-size: 10px;
+  }
+}

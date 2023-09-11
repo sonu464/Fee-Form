@@ -121,3 +121,7 @@ body {
   border-bottom: 2px dotted gray;
   padding: 0 5px;
 }
+
+#date:focus {
+  outline: none;
+}
