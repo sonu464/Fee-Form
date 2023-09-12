@@ -54,6 +54,7 @@
   /* ---------------Bottom Box ---------------*/
   .payment-method h5 {
     font-size: 15px;
+    line-height: 2;
   }
 
   .payment-method h5 .cheque-date {
