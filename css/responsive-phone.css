@@ -17,7 +17,6 @@
   }
 
   .institute-name {
-    align-items: flex-start;
     height: 70px;
   }
 
@@ -37,12 +36,28 @@
   .voucher-box h4,
   .head-box h4,
   .t-right h4 {
-    font-size: 12px;
+    font-size: 15px;
   }
 
   #voucher,
   #head,
   #date {
-    font-size: 10px;
+    font-size: 12px;
+  }
+
+  /* --------------- Center2 Box ---------------*/
+
+  .center2-left h5 {
+    font-size: 15px;
+  }
+
+  /* ---------------Bottom Box ---------------*/
+  .payment-method h5 {
+    font-size: 15px;
+  }
+
+  .payment-method h5 .cheque-date {
+    border: 0;
+    width: 30%;
   }
 }

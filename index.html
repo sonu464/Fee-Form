@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fee Form</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="responsive-phone.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive-phone.css" />
   </head>
   <body>
     <div class="container">
@@ -13,7 +13,7 @@
       <div class="top-box">
         <div class="top-up">
           <div class="logo">
-            <img src="https://www.himtrtk.com/index.php" alt="" />
+            <img src="images/himt.jpg" alt="" />
           </div>
           <div class="institute-name">
             <h1>Hindu Institute of Management & Technology</h1>
@@ -39,20 +39,62 @@
       </div>
 
       <!-- Center1-box -->
-      <div class="center1-box"></div>
+      <div class="center1-box">
+        <div class="heading">
+          <div class="particular">
+            <h4>PARTICULARS</h4>
+          </div>
+          <div class="amount">
+            <h5>Amount</h5>
+          </div>
+        </div>
+
+        <div class="particular-container">
+          <div class="particular-box"></div>
+          <div class="amount-box">
+            <div class="rs-box"><h5>Rs</h5></div>
+            <div class="paise-box"><h5>P</h5></div>
+          </div>
+        </div>
+        <div class="total">
+          <div class="total-heading">
+            <h4>Total</h4>
+          </div>
+          <div class="total-value"></div>
+        </div>
+      </div>
 
       <!-- Center2-box -->
       <div class="center2-box">
         <div class="center2-left">
-          <span>Passed for Payment of Rs</span>
+          <h5>Passed for Payment of Rs</h5>
           <input type="number" id="Payment" />
         </div>
-        <div class="center2-right"></div>
+        <div class="center2-right">
+          <div class="accountant">
+            <h3>Accountant</h3>
+          </div>
+          <div class="director">
+            <h3>Director</h3>
+          </div>
+        </div>
       </div>
 
       <!-- Bottom-box -->
-      <div class="bottom-box"></div>
+      <div class="bottom-box">
+        <div class="payment-method">
+          <h5>
+            Received Payment of Rs <input type="number" id="payment-type" /> in
+            <select id="choose-type">
+              <option value="Cash">Cash</option>
+              <option value="Cheque">Cheque</option>
+            </select>
+            <span id="if-cheque"></span>
+          </h5>
+        </div>
+        <div class="reci-sign">Signature of Recipient</div>
+      </div>
     </div>
-    <script src="script.js"></script>
+    <script src="script/script.js"></script>
   </body>
 </html>
