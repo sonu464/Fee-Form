@@ -312,3 +312,6 @@ body {
   font-style: italic;
   margin-top: 5%;
 }
+.cheque-date {
+  background-color:transparent;
+}
