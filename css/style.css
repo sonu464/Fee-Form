@@ -125,6 +125,7 @@ body {
   border: 0;
   border-bottom: 2px dotted gray;
   padding: 0 5px;
+  background-color:transparent;
 }
 
 #date:focus {
