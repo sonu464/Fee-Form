@@ -314,4 +314,5 @@ body {
 }
 .cheque-date {
   background-color:transparent;
+  border-bottom: 2px dotted gray;
 }
