@@ -206,8 +206,8 @@ body {
   width: 70%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 10px 0;
+  justify-content: flex-start;
+  padding: 10px 0px;
 }
 
 .total-value {
@@ -313,3 +313,35 @@ body {
   margin-top: 5%;
 }
 
+.particular-box{
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+.feeOptions{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  margin:10px;
+  /* width: 60%; */
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 1.3rem;
+}
+
+/* 
+.feeOptions input[type='checkbox']{
+} */
+.feeOptions label{
+  border: 0.1px inset brown;
+  border-radius: 4px;
+  padding:5px;
+  outline: none;
+
+}
+#other-charge{
+  font-size:1rem ;
+  padding:5px;
+  outline: none;
+
+}
