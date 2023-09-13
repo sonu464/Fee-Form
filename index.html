@@ -51,45 +51,90 @@
 
         <div class="particular-container">
           <div class="particular-box">
-            
-            <span class="feeOptions">
-              <label for="op1" > Admission fee </label>
-              <input type="checkbox" name="Admission fee" id="op1">
-            </span>
-            <span class="feeOptions">
-              <label for="op2" >Examination Fee </label>
-              <input type="checkbox" name="Examination Fee" id="op2">
-            </span>
-            <span class="feeOptions">
-              <label for="op3" >Monthly Fee</label>
-              <input type="checkbox" name="Monthly Fee" id="op3">
-            </span>
-            <span class="feeOptions">
-              <label for="op4" >Security </label>
-              <input type="checkbox" name="Security" id="op4">
-            </span>
-            <span class="feeOptions">
-              <label for="op5" >Annual Charges</label>
-              <input type="checkbox" name="Annual Charges" id="op5">
-            </span>
-            <span class="feeOptions">
-              <label for="op6" >Any other</label>
-              <input type="number" placeholder=" Other fee" id="other-charge">
-              <input type="checkbox" name="Other charges" id="op6">
-            </span>
-
-
+            <div class="fee-type">
+              <span class="feeOptions">
+                <label for="op1"> Admission fee </label>
+                <input type="checkbox" name="Admission fee" id="op1" />
+              </span>
+              <span class="feeOptions">
+                <label for="op2">Examination Fee </label>
+                <input type="checkbox" name="Examination Fee" id="op2" />
+              </span>
+              <span class="feeOptions">
+                <label for="op3">Monthly Fee</label>
+                <input type="checkbox" name="Monthly Fee" id="op3" />
+              </span>
+              <span class="feeOptions">
+                <label for="op4">Security </label>
+                <input type="checkbox" name="Security" id="op4" />
+              </span>
+              <span class="feeOptions">
+                <label for="op5">Annual Charges</label>
+                <input type="checkbox" name="Annual Charges" id="op5" />
+              </span>
+              <span class="feeOptions">
+                <label for="op6">Any other</label>
+                <input type="text" placeholder=" Other fee" id="other-charge" />
+                <input type="checkbox" name="Other charges" id="op6" />
+              </span>
+            </div>
           </div>
           <div class="amount-box">
-            <div class="rs-box"><h5>Rs</h5></div>
-            <div class="paise-box"><h5>P</h5></div>
+            <div class="rs-box">
+              <h5>Rs</h5>
+              <div class="rs">
+                <span class="rsOptions">
+                  <input type="number" id="rs1" class="rupee" />
+                </span>
+                <span class="rsOptions">
+                  <input type="number" id="rs2" class="rupee" />
+                </span>
+                <span class="rsOptions">
+                  <input type="number" id="rs3" class="rupee" />
+                </span>
+                <span class="rsOptions">
+                  <input type="number" id="rs4" class="rupee" />
+                </span>
+                <span class="rsOptions">
+                  <input type="number" id="rs5" class="rupee" />
+                </span>
+                <span class="rsOptions">
+                  <input type="number" id="rs6" class="rupee" />
+                </span>
+              </div>
+            </div>
+            <div class="paise-box">
+              <h5>P</h5>
+              <div class="rs">
+                <span class="rsOptions paise">
+                  <input type="number" id="rs1" />
+                </span>
+                <span class="rsOptions paise">
+                  <input type="number" id="rs1" />
+                </span>
+                <span class="rsOptions paise">
+                  <input type="number" id="rs1" />
+                </span>
+                <span class="rsOptions paise">
+                  <input type="number" id="rs1" />
+                </span>
+                <span class="rsOptions paise">
+                  <input type="number" id="rs1" />
+                </span>
+                <span class="rsOptions paise">
+                  <input type="number" id="rs1" />
+                </span>
+              </div>
+            </div>
           </div>
         </div>
         <div class="total">
           <div class="total-heading">
-            <h4>Total</h4>
+            <h4>Total Amount</h4>
           </div>
-          <div class="total-value"></div>
+          <div class="total-value">
+            <span id="total-money"></span>
+          </div>
         </div>
       </div>
 
@@ -97,7 +142,7 @@
       <div class="center2-box">
         <div class="center2-left">
           <h5>Passed for Payment of Rs</h5>
-          <input type="number" id="Payment" />
+          <input type="number" id="passes-payment" />
         </div>
         <div class="center2-right">
           <div class="accountant">
