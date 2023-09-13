@@ -62,8 +62,16 @@
     width: 30%;
   }
 
-.cheque-date {
-  background-color:transparent;
-  border-bottom: 2px dotted gray;
-}
+  /* --------------- Total Box ---------------*/
+  #other-charge {
+    width: 30%;
+  }
+
+  .rsOptions input {
+    width: 65%;
+  }
+
+  .paise input {
+    width: 45%;
+  }
 }
