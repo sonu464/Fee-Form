@@ -21,60 +21,89 @@ const rs6 = document.getElementById("rs6");
 let voucherValue = "";
 let headValue = "";
 let dateValue = "";
+let particularArray = [];
 
 // Adding particulars
 const particularItem = () => {
   addParticular.addEventListener("click", () => {
+    const particularId = Math.floor(Math.random() * 1000);
     // Adding particular box
     const particularAddingItem = document.createElement("span");
+    particularAddingItem.setAttribute("id", particularId);
     particularAddingItem.classList.add("feeOptions");
     particularAddingItem.innerHTML = `
-         <input type="text" name="Admission fee" />
-      `
+         <input  class="fee-input" type="text" name="Admission fee" />
+         <button class="particular-delete">X</button>
+      `;
 
+    particularArray.push(particularAddingItem);
     // Adding rupee box
     const rupeeAddingItem = document.createElement("span");
-    rupeeAddingItem.classList.add("rsOptions")
+    rupeeAddingItem.setAttribute("id", particularId);
+    rupeeAddingItem.classList.add("rsOptions");
     rupeeAddingItem.innerHTML = `
          <input type="number" class="rupee" min="0" />
-    `
+    `;
 
     rsType.appendChild(rupeeAddingItem);
     feeType.appendChild(particularAddingItem);
 
-    
-// Total Amount
-const totalAmount = () => {
-  const rupee = document.querySelectorAll(".rupee");
-  let total = 0;
-  rupee.forEach((item) => {
-  total += parseFloat(item.value || 0);
-  totalMoney.innerHTML = `
-      <h1>Rs ${total}</h1>
-    `;
-  passesPayment.value = total;
-  paymentType.value = total;
-  });
-};
+    // Add an event listener to removeParticular
+    const removeParticularItem = (btnParentId) => {
+      const particularToRemove = document.getElementById(btnParentId);
+      const rupeeId = rupeeAddingItem.getAttribute("id");
 
-// Adding Event Listener on Rs
-const rupeeTotalAmount =()=>{
-  const rupee = document.querySelectorAll(".rupee");
-  rupee.forEach((item) => {
-    item.addEventListener("input", totalAmount);
-    item.addEventListener("input", () => {
-      if (item.value < 1) {
-        item.value = "";
+      if (btnParentId === rupeeId) {
+        particularToRemove.remove();
+        rupeeAddingItem.remove();
+
+        // Recalculate the total amount after removal
+        totalAmount();
       }
+    };
+
+    const removeParticular = document.querySelectorAll(".particular-delete");
+    removeParticular.forEach((item) => {
+      item.addEventListener("click", () => {
+        const btnParentId = item.parentElement.getAttribute("id");
+        removeParticularItem(btnParentId);
+      });
     });
+
+    // Total Amount
+    const totalAmount = () => {
+      const rupee = document.querySelectorAll(".rupee");
+      let total = 0;
+      rupee.forEach((item) => {
+        total += parseFloat(item.value || 0);
+        totalMoney.innerHTML = ` <h1>Rs ${total}</h1>`;
+        passesPayment.value = total;
+        paymentType.value = total;
+      });
+      if (rupee.length === 0) {
+        totalMoney.innerHTML = `<h1>Rs 0</h1>`;
+        passesPayment.value = 0;
+        paymentType.value = 0;
+      }
+    };
+
+    // Adding Event Listener on Rs
+    const rupeeTotalAmount = () => {
+      const rupee = document.querySelectorAll(".rupee");
+      rupee.forEach((item) => {
+        item.addEventListener("input", totalAmount);
+        item.addEventListener("input", () => {
+          if (item.value < 1) {
+            item.value = "";
+          }
+        });
+      });
+    };
+
+    rupeeTotalAmount();
+    // Function to add total amount
+    totalAmount();
   });
-}
-
-rupeeTotalAmount();
-
-  });
-
-
 };
 
 // function to check payment by cash or cheque
@@ -115,7 +144,7 @@ const checkMethod = () => {
 //       if (item.value < 1) {
 //         item.value = "";
 //       }
-  
+
 //     });
 //   });
 // }
@@ -130,12 +159,8 @@ const validation = (callback) => {
     }
     voucherValue = voucher.value;
     callback(voucherValue);
-  })
-}
-
-// Function
-// Function to get total value
-// totalAmount();
+  });
+};
 
 // Function to check the payment method
 checkMethod();
