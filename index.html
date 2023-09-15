@@ -24,7 +24,7 @@
           <div class="t-left">
             <div class="voucher-box">
               <h4>Voucher No.</h4>
-              <input type="number" id="voucher" />
+              <input type="number" id="voucher" min="1" />
             </div>
             <div class="head-box">
               <h4>Head</h4>
@@ -43,6 +43,7 @@
         <div class="heading">
           <div class="particular">
             <h4>PARTICULARS</h4>
+            <button id="add-particular"><i class="fa fa-plus"></i></button>
           </div>
           <div class="amount">
             <h5>Amount</h5>
@@ -84,22 +85,22 @@
               <h5>Rs</h5>
               <div class="rs">
                 <span class="rsOptions">
-                  <input type="number" id="rs1" class="rupee" />
+                  <input type="number" id="rs1" class="rupee" min="0" />
                 </span>
                 <span class="rsOptions">
-                  <input type="number" id="rs2" class="rupee" />
+                  <input type="number" id="rs2" class="rupee" min="0" />
                 </span>
                 <span class="rsOptions">
-                  <input type="number" id="rs3" class="rupee" />
+                  <input type="number" id="rs3" class="rupee" min="0" />
                 </span>
                 <span class="rsOptions">
-                  <input type="number" id="rs4" class="rupee" />
+                  <input type="number" id="rs4" class="rupee" min="0" />
                 </span>
                 <span class="rsOptions">
-                  <input type="number" id="rs5" class="rupee" />
+                  <input type="number" id="rs5" class="rupee" min="0" />
                 </span>
                 <span class="rsOptions">
-                  <input type="number" id="rs6" class="rupee" />
+                  <input type="number" id="rs6" class="rupee" min="0" />
                 </span>
               </div>
             </div>
@@ -169,6 +170,10 @@
         <div class="reci-sign">Signature of Recipient</div>
       </div>
     </div>
+    <script
+      src="https://kit.fontawesome.com/65ed7860c1.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="script/script.js"></script>
   </body>
 </html>
