@@ -152,7 +152,16 @@ body {
   width: 70%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+}
+
+.particular button {
+  padding: 2px 5px;
+  border: none;
+  background-color: #80808054;
+  border-radius: 2px;
+  color: #00000078;
+  cursor: pointer;
 }
 
 .amount {
