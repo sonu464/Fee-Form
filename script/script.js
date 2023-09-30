@@ -18,10 +18,25 @@ const rs5 = document.getElementById("rs5");
 const rs6 = document.getElementById("rs6");
 
 // Values
-let voucherValue = "";
-let headValue = "";
 let dateValue = "";
 let particularArray = [];
+
+// voucherValue
+let voucherValue;
+voucher.addEventListener("change", () => {
+  if (voucher.value < 1) {
+    voucher.value = "";
+  }
+  voucherValue = voucher.value;
+  values();
+});
+
+// HeadBox
+let headValue;
+head.addEventListener("change", () => {
+  headValue = head.value;
+  values();
+});
 
 // Adding particulars
 const particularItem = () => {
@@ -121,56 +136,50 @@ const checkMethod = () => {
   }
 };
 
-// // Total Amount
-// const totalAmount = () => {
-
-//   let total = 0;
-//   rupee.forEach((item) => {
-//     console.log(item.value);
-//   total += parseFloat(item.value || 0);
-//   totalMoney.innerHTML = `
-//       <h1>Rs ${total}</h1>
-//     `;
-//   passesPayment.value = total;
-//   paymentType.value = total;
-//   });
-// };
-
-// // Adding Event Listener on Rs
-// const rupeeTotalAmount =()=>{
-//   rupee.forEach((item) => {
-//     item.addEventListener("input", totalAmount);
-//     item.addEventListener("input", () => {
-//       if (item.value < 1) {
-//         item.value = "";
-//       }
-
-//     });
-//   });
-// }
-
-// rupeeTotalAmount();
-
-// Validation Field
-const validation = (callback) => {
-  voucher.addEventListener("input", () => {
-    if (voucher.value < 1) {
-      voucher.value = "";
-    }
-    voucherValue = voucher.value;
-    callback(voucherValue);
-  });
-};
-
 // Function to check the payment method
 checkMethod();
 
 // Function to add particulars
 particularItem();
 
-// Validation
-validation();
-
 // Event Listeners
 // Add an event listener to the select element to listen for changes
 selectPaymentMethod.addEventListener("change", checkMethod);
+
+const databaseBtn = document.getElementById("databaseBtn");
+
+function values() {
+  let dataBase = {
+    voucherNo: voucherValue,
+    head: headValue,
+    voucherDate: "",
+    particular: [{}],
+    totalRs: "",
+    paymentReceviedWay: "",
+    chequeNo: "",
+    chequeDate: "",
+  };
+  return dataBase;
+}
+
+databaseBtn.addEventListener("click", () => {
+  let DataBase = values();
+  addDatabase(DataBase);
+
+  // console.log(DataBase);
+});
+async function addDatabase(db) {
+  const response = await fetch(
+    "https://react-http-474a8-default-rtdb.firebaseio.com/collageDB.json",
+    {
+      method: "POST",
+      body: JSON.stringify(db),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const data = await response.json();
+  console.log(data);
+}
