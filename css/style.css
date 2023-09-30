@@ -438,3 +438,10 @@ body {
   font-style: italic;
   margin-top: 5%;
 }
+
+/* DataBase Button */
+.databaseBtn {
+  position: fixed;
+  top: 0;
+  left: 3%;
+}
