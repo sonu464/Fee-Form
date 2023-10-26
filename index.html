@@ -1,181 +1,185 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fee Form</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/responsive-phone.css" />
-  </head>
-  <body>
-      <button id="databaseBtn" class="databaseBtn">add</button>
-    <div class="container">
-      <!-- Top-box -->
-      <div class="top-box">
-        <div class="top-up">
-          <div class="logo">
-            <img src="images/himt.jpg" alt="" />
-          </div>
-          <div class="institute-name">
-            <h1>Hindu Institute of Management & Technology</h1>
-            <h3>ROHTAK - 124001</h3>
-          </div>
-        </div>
-        <div class="top-down">
-          <div class="t-left">
-            <div class="voucher-box">
-              <h4>Voucher No.</h4>
-              <input type="number" id="voucher" min="1" max="1000000" />
-            </div>
-            <div class="head-box">
-              <h4>Head</h4>
-              <input type="text" id="head" />
-            </div>
-          </div>
-          <div class="t-right">
-            <h4>Date</h4>
-            <input type="date" id="date" />
-          </div>
-        </div>
-      </div>
-
-      <!-- Center1-box -->
-      <div class="center1-box">
-        <div class="heading">
-          <div class="particular">
-            <h4>PARTICULARS</h4>
-            <button id="add-particular">+</i></button>
-          </div>
-          <div class="amount">
-            <h5>Amount</h5>
-          </div>
-        </div>
-
-        <div class="particular-container">
-          <div class="particular-box">
-            <div class="fee-type" id="fee-type">
-              <!-- <span class="feeOptions">
-                <input type="text" value="Fine" name="Admission fee" />
-              </span> -->
-              <!--  <span class="feeOptions">
-                <label for="op2">Examination Fee </label>
-                <input type="checkbox" name="Examination Fee" id="op2" />
-              </span>
-              <span class="feeOptions">
-                <label for="op3">Monthly Fee</label>
-                <input type="checkbox" name="Monthly Fee" id="op3" />
-              </span>
-              <span class="feeOptions">
-                <label for="op4">Security </label>
-                <input type="checkbox" name="Security" id="op4" />
-              </span>
-              <span class="feeOptions">
-                <label for="op5">Annual Charges</label>
-                <input type="checkbox" name="Annual Charges" id="op5" />
-              </span>
-              <span class="feeOptions">
-                <label for="op6">Any other</label>
-                <input type="text" placeholder=" Other fee" id="other-charge" />
-                <input type="checkbox" name="Other charges" id="op6" />
-              </span> -->
-            </div>
-          </div>
-          <div class="amount-box">
-            <div class="rs-box">
-              <h5>Rs</h5>
-              <div class="rs" id="rs-type">
-                <!-- <span class="rsOptions">
-                  <input type="number" class="rupee" min="0" />
-                </span> -->
-                <!-- <span class="rsOptions">
-                  <input type="number" id="rs2" class="rupee" min="0" />
-                </span>
-                <span class="rsOptions">
-                  <input type="number" id="rs3" class="rupee" min="0" />
-                </span>
-                <span class="rsOptions">
-                  <input type="number" id="rs4" class="rupee" min="0" />
-                </span>
-                <span class="rsOptions">
-                  <input type="number" id="rs5" class="rupee" min="0" />
-                </span>
-                <span class="rsOptions">
-                  <input type="number" id="rs6" class="rupee" min="0" />
-                </span>  -->
-              </div>
-            </div>
-            <!-- <div class="paise-box">
-              <h5>P</h5>
-              <div class="rs">
-                <span class="rsOptions paise">
-                  <input type="number" id="rs1" />
-                </span>
-                <span class="rsOptions paise">
-                  <input type="number" id="rs1" />
-                </span>
-                <span class="rsOptions paise">
-                  <input type="number" id="rs1" />
-                </span>
-                <span class="rsOptions paise">
-                  <input type="number" id="rs1" />
-                </span>
-                <span class="rsOptions paise">
-                  <input type="number" id="rs1" />
-                </span>
-                <span class="rsOptions paise">
-                  <input type="number" id="rs1" />
-                </span>
-              </div>
-            </div> -->
-          </div>
-        </div>
-        <div class="total">
-          <div class="total-heading">
-            <h4>Total Amount</h4>
-          </div>
-          <div class="total-value">
-            <span id="total-money">
-              <h1>Rs 0</h1>
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Center2-box -->
-      <div class="center2-box">
-        <div class="center2-left">
-          <h5>Passed for Payment of Rs</h5>
-          <input type="number" id="passes-payment" />
-        </div>
-        <div class="center2-right">
-          <div class="accountant">
-            <h3>Accountant</h3>
-          </div>
-          <div class="director">
-            <h3>Director</h3>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bottom-box -->
-      <div class="bottom-box">
-        <div class="payment-method">
-          <h5>
-            Received Payment of Rs <input type="number" id="payment-type" /> in
-            <select id="choose-type">
-              <option value="Cash">Cash</option>
-              <option value="Cheque">Cheque</option>
-            </select>
-            <span id="if-cheque"></span>
-          </h5>
-        </div>
-        <div class="reci-sign">Signature of Recipient</div>
-      </div>
-    </div>
-    <script
-      src="https://kit.fontawesome.com/65ed7860c1.js"
-      crossorigin="anonymous"
-    ></script>
-    <script src="script/script.js"></script>
-  </body>
-</html>
+<!DOCTYPE html> 
+ <html lang="en"> 
+  
+ <head> 
+   <meta charset="UTF-8" /> 
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+   <title>Fee Form</title> 
+   <link rel="stylesheet" href="css/style.css" /> 
+   <link rel="stylesheet" href="css/responsive-phone.css" /> 
+ </head> 
+  
+ <body> 
+   <form> 
+     <div class="container"> 
+       <!-- Top-box --> 
+       <div class="top-box"> 
+         <div class="top-up"> 
+           <div class="logo"> 
+             <img src="images/himt.jpg" alt="" /> 
+           </div> 
+           <div class="institute-name"> 
+             <h1>Hindu Institute of Management & Technology</h1> 
+             <h3>ROHTAK - 124001</h3> 
+           </div> 
+         </div> 
+         <div class="top-down"> 
+           <div class="t-left"> 
+             <div class="voucher-box"> 
+               <h4>Voucher No.</h4> 
+               <input type="number" id="voucher" min="1" max="1000000" /> 
+             </div> 
+             <div class="head-box"> 
+               <h4>Head</h4> 
+               <input type="text" id="head" /> 
+             </div> 
+           </div> 
+           <div class="t-right"> 
+             <h4>Date</h4> 
+             <input type="date" id="date" /> 
+           </div> 
+         </div> 
+       </div> 
+  
+       <!-- Center1-box --> 
+       <div class="center1-box"> 
+         <div class="heading"> 
+           <div class="particular"> 
+             <h4>PARTICULARS</h4> 
+             <button type="button" id="add-particular">+</i></button> 
+           </div> 
+           <div class="amount"> 
+             <h5>Amount</h5> 
+           </div> 
+         </div> 
+  
+         <div class="particular-container"> 
+           <div class="particular-box"> 
+             <div class="fee-type" id="fee-type"> 
+               <!-- <span class="feeOptions"> 
+                 <input type="text" value="Fine" name="Admission fee" /> 
+               </span> --> 
+               <!--  <span class="feeOptions"> 
+                 <label for="op2">Examination Fee </label> 
+                 <input type="checkbox" name="Examination Fee" id="op2" /> 
+               </span> 
+               <span class="feeOptions"> 
+                 <label for="op3">Monthly Fee</label> 
+                 <input type="checkbox" name="Monthly Fee" id="op3" /> 
+               </span> 
+               <span class="feeOptions"> 
+                 <label for="op4">Security </label> 
+                 <input type="checkbox" name="Security" id="op4" /> 
+               </span> 
+               <span class="feeOptions"> 
+                 <label for="op5">Annual Charges</label> 
+                 <input type="checkbox" name="Annual Charges" id="op5" /> 
+               </span> 
+               <span class="feeOptions"> 
+                 <label for="op6">Any other</label> 
+                 <input type="text" placeholder=" Other fee" id="other-charge" /> 
+                 <input type="checkbox" name="Other charges" id="op6" /> 
+               </span> --> 
+             </div> 
+           </div> 
+           <div class="amount-box"> 
+             <div class="rs-box"> 
+               <h5>Rs</h5> 
+               <div class="rs" id="rs-type"> 
+                 <!-- <span class="rsOptions"> 
+                   <input type="number" class="rupee" min="0" /> 
+                 </span> --> 
+                 <!-- <span class="rsOptions"> 
+                   <input type="number" id="rs2" class="rupee" min="0" /> 
+                 </span> 
+                 <span class="rsOptions"> 
+                   <input type="number" id="rs3" class="rupee" min="0" /> 
+                 </span> 
+                 <span class="rsOptions"> 
+                   <input type="number" id="rs4" class="rupee" min="0" /> 
+                 </span> 
+                 <span class="rsOptions"> 
+                   <input type="number" id="rs5" class="rupee" min="0" /> 
+                 </span> 
+                 <span class="rsOptions"> 
+                   <input type="number" id="rs6" class="rupee" min="0" /> 
+                 </span>  --> 
+               </div> 
+             </div> 
+             <!-- <div class="paise-box"> 
+               <h5>P</h5> 
+               <div class="rs"> 
+                 <span class="rsOptions paise"> 
+                   <input type="number" id="rs1" /> 
+                 </span> 
+                 <span class="rsOptions paise"> 
+                   <input type="number" id="rs1" /> 
+                 </span> 
+                 <span class="rsOptions paise"> 
+                   <input type="number" id="rs1" /> 
+                 </span> 
+                 <span class="rsOptions paise"> 
+                   <input type="number" id="rs1" /> 
+                 </span> 
+                 <span class="rsOptions paise"> 
+                   <input type="number" id="rs1" /> 
+                 </span> 
+                 <span class="rsOptions paise"> 
+                   <input type="number" id="rs1" /> 
+                 </span> 
+               </div> 
+             </div> --> 
+           </div> 
+         </div> 
+         <div class="total"> 
+           <div class="total-heading"> 
+             <h4>Total Amount</h4> 
+           </div> 
+           <div class="total-value"> 
+             <span id="total-money"> 
+               <h1>Rs 0</h1> 
+             </span> 
+           </div> 
+         </div> 
+       </div> 
+  
+       <!-- Center2-box --> 
+       <div class="center2-box"> 
+         <div class="center2-left"> 
+           <h5>Passed for Payment of Rs</h5> 
+           <input type="number" id="passes-payment" /> 
+         </div> 
+         <div class="center2-right"> 
+           <div class="accountant"> 
+             <h3>Accountant</h3> 
+           </div> 
+           <div class="director"> 
+             <h3>Director</h3> 
+           </div> 
+         </div> 
+       </div> 
+  
+       <!-- Bottom-box --> 
+       <div class="bottom-box"> 
+         <div class="payment-method"> 
+           <h5> 
+             Received Payment of Rs <input type="number" id="payment-type" /> in 
+             <select id="choose-type"> 
+               <option value="Cash">Cash</option> 
+               <option value="Cheque">Cheque</option> 
+             </select> 
+             <span id="if-cheque"></span> 
+           </h5> 
+         </div> 
+         <div class="reci-sign">Signature of Recipient</div> 
+       </div> 
+     </div> 
+  
+     <button id="saveVoucherData">save</button> 
+   </form> 
+   <script src="https://kit.fontawesome.com/65ed7860c1.js" crossorigin="anonymous"></script> 
+   <!-- <script src="script/script.js"></script> --> 
+   <script src="script/newScript.js"></script> 
+ </body> 
+  
+ </html
