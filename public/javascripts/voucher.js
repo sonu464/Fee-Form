@@ -15,8 +15,8 @@ const checkMethod = () => {
   if (selectedOption === "Cheque") {
     const chequeInfo = document.createElement("span");
     chequeInfo.innerHTML = ` 
-         no <input id="chequeNo" type="text" /> date 
-         <input id="chequeDate" type="date" class="cheque-date"/> 
+         no <input name="voucherNo"  id="chequeNo" type="text" /> date 
+         <input name="voucherDate"  id="chequeDate" type="date" class="cheque-date"/> 
      `;
     ifCheque.appendChild(chequeInfo);
   } else {
@@ -110,106 +110,58 @@ addParticular.addEventListener("click", () => {
   totalAmount();
 });
 
-function onSubmitHandler(event) {
-  event.preventDefault();
+// function onSubmitHandler(event) {
+//   event.preventDefault();
 
-  // Validate the input fields
-  const voucher = document.getElementById("voucher").value;
-  const head = document.getElementById("head").value;
-  const date = document.getElementById("date").value;
-  const paymentMethod = document.getElementById("choose-type").value;
+//   // Validate the input fields
+//   const voucher = document.getElementById("voucher").value;
+//   const head = document.getElementById("head").value;
+//   const date = document.getElementById("date").value;
+//   const paymentMethod = document.getElementById("choose-type").value;
 
-  let chequeDate = "";
-  let chequeNo = "";
+//   let chequeDate = "";
+//   let chequeNo = "";
 
-  const selectedOption = selectPaymentMethod.value;
-  if (selectedOption === "Cheque") {
-    chequeDate = document.getElementById("chequeDate").value;
-    chequeNo = document.getElementById("chequeNo").value;
-  }
+//   const selectedOption = selectPaymentMethod.value;
+//   if (selectedOption === "Cheque") {
+//     chequeDate = document.getElementById("chequeDate").value;
+//     chequeNo = document.getElementById("chequeNo").value;
+//   }
 
-  if (!voucher || !head || !date || !paymentMethod || !globalTotalAmount) {
-    alert("Please fill in all required fields.");
-    return;
-  }
+//   if (!voucher || !head || !date || !paymentMethod || !globalTotalAmount) {
+//     alert("Please fill in all required fields.");
+//     return;
+//   }
 
-  // Gather the data
-  const data = {
-    voucher,
-    head,
-    date,
-    paymentMethod,
-    globalTotalAmount,
-    chequeDate,
-    chequeNo,
-  };
+//   // Gather the data
+//   const data = {
+//     voucher,
+//     head,
+//     date,
+//     paymentMethod,
+//     globalTotalAmount,
+//     chequeDate,
+//     chequeNo,
+//   };
+//   // Here you can send the data to a server or perform any other actions
 
-  // Initialize the addDataBase funtion
-  addDatabase(data);
+//   // Clear the form (if needed)
+//   document.getElementById("voucher").value = "";
+//   document.getElementById("head").value = "";
+//   document.getElementById("date").value = "";
+//   document.getElementById("total-money").innerHTML = "<h1>Rs 0<h1/>";
+//   document.getElementById("choose-type").value = "Cash";
+//   document.getElementById("rs-type").innerHTML = "";
+//   document.getElementById("fee-type").innerHTML = "";
+//   document.getElementById("payment-type").value = "";
+//   document.getElementById("passes-payment").value = "";
+//   checkMethod();
+// }
 
-  // Here you can send the data to a server or perform any other actions
-
-  // Clear the form (if needed)
-  document.getElementById("voucher").value = "";
-  document.getElementById("head").value = "";
-  document.getElementById("date").value = "";
-  document.getElementById("total-money").innerHTML = "<h1>Rs 0<h1/>";
-  document.getElementById("choose-type").value = "Cash";
-  document.getElementById("rs-type").innerHTML = "";
-  document.getElementById("fee-type").innerHTML = "";
-  document.getElementById("payment-type").value = "";
-  document.getElementById("passes-payment").value = "";
-  checkMethod();
-}
-
-// You can access and use this 'data' object as needed
-async function addDatabase(data) {
-  const response = await fetch(
-    "https://react-http-474a8-default-rtdb.firebaseio.com/collageDB.json",
-    {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  const dbData = await response.json();
-  console.log(dbData);
-}
-
-const loadedVoucherData = [];
-fetch("https://react-http-474a8-default-rtdb.firebaseio.com/collageDB.json")
-  .then((res) => res.json())
-  .then((result) => {
-    for (const key in result) {
-      loadedVoucherData.push({
-        id: key,
-        chequeDate: result[key].chequeDate,
-        chequeNo: result[key].chequeNo,
-        voucher: result[key].voucher,
-        head: result[key].head,
-        paymentMethod: result[key].paymentMethod,
-        date: result[key].date,
-        globalTotalAmount: result[key].globalTotalAmount,
-      });
-    }
-
-    const voucher = document.getElementById("voucher");
-    voucher.addEventListener("change", () => {
-      const voucherValue = voucher.value;
-      if (loadedVoucherData.some((item) => item.voucher === voucherValue)) {
-        voucher.value = "";
-        alert("voucher is already exists");
-      }
-    });
-  });
-
-// Attach a click event handler to the "save" button
-document
-  .getElementById("saveVoucherData")
-  .addEventListener("click", onSubmitHandler);
+// // Attach a click event handler to the "save" button
+// document
+//   .getElementById("saveVoucherData")
+//   .addEventListener("click", onSubmitHandler);
 
 // Add an event listener to the select element to listen for changes
 selectPaymentMethod.addEventListener("change", checkMethod);

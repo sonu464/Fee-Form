@@ -4,18 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fee Form</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/responsive-phone.css" />
+    <link rel="stylesheet" href="/stylesheets/voucher.css" />
+    <link rel="stylesheet" href="/stylesheets/voucher-responsive.css" />
   </head>
 
   <body>
-    <form id="form">
+    <form id="form" action="/" method="POST">
       <div class="container">
         <!-- Top-box -->
         <div class="top-box">
           <div class="top-up">
             <div class="logo">
-              <img src="images/himt.jpg" alt="" />
+              <img src="/images/himt.jpg" alt="" />
             </div>
             <div class="institute-name">
               <h1>Hindu Institute of Management & Technology</h1>
@@ -26,16 +26,22 @@
             <div class="t-left">
               <div class="voucher-box">
                 <h4>Voucher No.</h4>
-                <input type="number" id="voucher" min="1" max="1000000" />
+                <input
+                  name="voucher"
+                  type="number"
+                  id="voucher"
+                  min="1"
+                  max="10000"
+                />
               </div>
               <div class="head-box">
                 <h4>Head</h4>
-                <input type="text" id="head" />
+                <input name="head" type="text" id="head" />
               </div>
             </div>
             <div class="t-right">
               <h4>Date</h4>
-              <input type="date" id="date" />
+              <input name="voucherDate" type="date" id="date" />
             </div>
           </div>
         </div>
@@ -79,7 +85,7 @@
         <div class="center2-box">
           <div class="center2-left">
             <h5>Passed for Payment of Rs</h5>
-            <input type="number" id="passes-payment" />
+            <input name="totalAmount" type="number" id="passes-payment" />
           </div>
           <div class="center2-right">
             <div class="accountant">
@@ -116,7 +122,6 @@
       src="https://kit.fontawesome.com/65ed7860c1.js"
       crossorigin="anonymous"
     ></script>
-    <!-- <script src="script/script.js"></script> -->
-    <script src="script/newScript.js"></script>
+    <script src="/javascripts/voucher.js"></script>
   </body>
 </html>
