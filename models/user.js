@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 
 // setup
-mongoose.connect("mongodb://127.0.0.1:27017/HimtVoucherData");
+mongoose.connect(
+  "mongodb+srv://9416sonusaini:bidu@cluster0.igkqpp7.mongodb.net/HimtVoucherData?retryWrites=true&w=majority"
+);
 
 // create schema
 const userSchema = mongoose.Schema({

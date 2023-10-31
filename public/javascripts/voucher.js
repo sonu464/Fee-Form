@@ -5,9 +5,16 @@ const passesPayment = document.getElementById("passes-payment");
 const paymentType = document.getElementById("payment-type");
 const rsType = document.getElementById("rs-type");
 const feeType = document.getElementById("fee-type");
+const voucherNo = document.getElementById("voucher");
 
 let globalTotalAmount = 0;
 let particularArray = [];
+
+voucherNo.addEventListener("input", () => {
+  if (voucherNo.value.trim() < 1) {
+    voucherNo.value = "";
+  }
+});
 
 // function to check payment by cash or cheque
 const checkMethod = () => {
@@ -15,8 +22,8 @@ const checkMethod = () => {
   if (selectedOption === "Cheque") {
     const chequeInfo = document.createElement("span");
     chequeInfo.innerHTML = ` 
-         no <input name="voucherNo"  id="chequeNo" type="text" /> date 
-         <input name="voucherDate"  id="chequeDate" type="date" class="cheque-date"/> 
+         no <input name="chequeNo"  id="chequeNo"    type="number" /> date 
+         <input name="chequeDate"  id="chequeDate" type="date" class="cheque-date"/> 
      `;
     ifCheque.appendChild(chequeInfo);
   } else {
@@ -100,6 +107,9 @@ addParticular.addEventListener("click", () => {
       item.addEventListener("input", () => {
         if (item.value < 1) {
           item.value = "";
+          totalMoney.innerHTML = `<h1  id="total-amount">Rs 0</h1>`;
+          passesPayment.value = 0;
+          paymentType.value = 0;
         }
       });
     });

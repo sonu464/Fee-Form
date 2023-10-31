@@ -10,6 +10,11 @@
 
   <body>
     <form id="form" action="/" method="POST">
+      <% if (errorMessage) { %>
+      <div class="error-message">
+        <p class="error-message"><%= errorMessage %></p>
+      </div>
+      <% } %>
       <div class="container">
         <!-- Top-box -->
         <div class="top-box">
@@ -102,7 +107,7 @@
           <div class="payment-method">
             <h5>
               Received Payment of Rs
-              <input type="number" id="payment-type" /> in
+              <input type="number" id="payment-type" disabled /> in
               <select id="choose-type">
                 <option value="Cash">Cash</option>
                 <option value="Cheque">Cheque</option>

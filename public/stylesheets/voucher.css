@@ -13,6 +13,21 @@ body {
   font-family: Georgia, "Times New Roman", Times, serif;
 }
 
+/* ---------------- Form --------------- */
+#form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  font-size: 15px;
+}
+
 /* ---------------- Main-Container ---------------- */
 .container {
   width: 600px;
@@ -67,6 +82,8 @@ body {
 
 .institute-name h1 {
   font-size: 23px;
+  text-align: center;
+  margin-bottom: 5px;
 }
 
 .top-down {
