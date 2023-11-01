@@ -32,7 +32,7 @@ router.post("/", async function (req, res) {
       });
     }
 
-    const userData = new User({
+    const userData = User({
       voucher,
       head,
       totalAmount,

@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 
 // setup
 mongoose.connect(
-  "mongodb+srv://9416sonusaini:bidu@cluster0.igkqpp7.mongodb.net/HimtVoucherData?retryWrites=true&w=majority"
+  "mongodb+srv://9416sonusaini:bidu@cluster0.igkqpp7.mongodb.net/HimtVoucherData?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
 );
 
 // create schema
