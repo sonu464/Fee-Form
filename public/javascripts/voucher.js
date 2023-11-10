@@ -43,7 +43,7 @@ addParticular.addEventListener("click", () => {
   particularAddingItem.setAttribute("id", particularId);
   particularAddingItem.classList.add("feeOptions");
   particularAddingItem.innerHTML = ` 
-            <input  class="fee-input" type="text" name="Admission fee" /> 
+            <input  class="fee-input" type="text" name="particular" /> 
             <button class="particular-delete">X</button> 
          `;
 
@@ -53,7 +53,7 @@ addParticular.addEventListener("click", () => {
   rupeeAddingItem.setAttribute("id", particularId);
   rupeeAddingItem.classList.add("rsOptions");
   rupeeAddingItem.innerHTML = ` 
-            <input type="number" class="rupee" min="0" /> 
+            <input type="number" class="rupee" min="0" name="rupee" /> 
        `;
 
   rsType.appendChild(rupeeAddingItem);
@@ -123,49 +123,7 @@ addParticular.addEventListener("click", () => {
 // function onSubmitHandler(event) {
 //   event.preventDefault();
 
-//   // Validate the input fields
-//   const voucher = document.getElementById("voucher").value;
-//   const head = document.getElementById("head").value;
-//   const date = document.getElementById("date").value;
-//   const paymentMethod = document.getElementById("choose-type").value;
-
-//   let chequeDate = "";
-//   let chequeNo = "";
-
-//   const selectedOption = selectPaymentMethod.value;
-//   if (selectedOption === "Cheque") {
-//     chequeDate = document.getElementById("chequeDate").value;
-//     chequeNo = document.getElementById("chequeNo").value;
-//   }
-
-//   if (!voucher || !head || !date || !paymentMethod || !globalTotalAmount) {
-//     alert("Please fill in all required fields.");
-//     return;
-//   }
-
-//   // Gather the data
-//   const data = {
-//     voucher,
-//     head,
-//     date,
-//     paymentMethod,
-//     globalTotalAmount,
-//     chequeDate,
-//     chequeNo,
-//   };
-//   // Here you can send the data to a server or perform any other actions
-
-//   // Clear the form (if needed)
-//   document.getElementById("voucher").value = "";
-//   document.getElementById("head").value = "";
-//   document.getElementById("date").value = "";
-//   document.getElementById("total-money").innerHTML = "<h1>Rs 0<h1/>";
-//   document.getElementById("choose-type").value = "Cash";
-//   document.getElementById("rs-type").innerHTML = "";
-//   document.getElementById("fee-type").innerHTML = "";
-//   document.getElementById("payment-type").value = "";
-//   document.getElementById("passes-payment").value = "";
-//   checkMethod();
+//   console.log("done");
 // }
 
 // // Attach a click event handler to the "save" button

@@ -4,13 +4,17 @@ const User = require("../models/user"); // Replace with your actual model
 
 /* GET home page. */
 router.get("/", function (req, res) {
-  // Render the "index" view without any error message
-  res.render("voucher", { errorMessage: null });
+  // Render the "voucher" view without any error message
+  res.render("voucher", {
+    errorMessage: null,
+  });
 });
 
 router.get("/voucher", function (req, res) {
-  // Render the "index" view without any error message
-  res.render("voucher", { errorMessage: null });
+  // Render the "voucher" view without any error message
+  res.render("voucher", {
+    errorMessage: null,
+  });
 });
 
 router.post("/", async function (req, res) {
@@ -18,35 +22,61 @@ router.post("/", async function (req, res) {
     const { voucher, head, totalAmount, voucherDate, chequeNo, chequeDate } =
       req.body;
 
+    let particularName = req.body.particular;
+    let particularRupee = req.body.rupee;
+
     if (
       !voucher ||
       !head ||
       !totalAmount ||
       !voucherDate ||
       !chequeNo ||
-      !chequeDate
+      !chequeDate ||
+      !particularName ||
+      !particularRupee
     ) {
-      // Check if any of the required fields are empty and render the "index" view with an error message
+      // Check if any of the required fields are empty and render the "voucher" view with an error message
       return res.status(400).render("voucher", {
         errorMessage: "Please fill in all required fields.",
       });
     }
 
-    const userData = User({
+    const particularData = [];
+
+    for (let i = 0; i < particularName.length; i++) {
+      const combinedObject = {
+        [particularName[i]]: particularRupee[i],
+      };
+      particularData.push(combinedObject);
+    }
+
+    const latestUserData = await User.findOne().sort({ voucher: -1 });
+
+    if (latestUserData && voucher == latestUserData.voucher) {
+      return res.status(400).render("voucher", {
+        errorMessage: "Voucher number already exists!",
+      });
+    }
+
+    const userData = new User({
       voucher,
       head,
       totalAmount,
       voucherDate,
       chequeDate,
       chequeNo,
+      particularData,
     });
 
     const registered = await userData.save();
-    res.status(201).render("stored");
+
+    req.flash("newVoucher", voucher);
+
+    res.status(201).render("stored", { newVoucher: req.flash("newVoucher") });
   } catch (error) {
     res
       .status(400)
-      .render("index", { errorMessage: "something went wrong! try again" });
+      .render("voucher", { errorMessage: "Something went wrong! Try again." });
   }
 });
 

@@ -4,6 +4,9 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
+const expressSession = require("express-session");
+const flash = require("connect-flash");
+
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 
@@ -12,6 +15,16 @@ var app = express();
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+
+app.use(
+  expressSession({
+    resave: true,
+    saveUninitialized: false,
+    secret: "hello bidu",
+  })
+);
+
+app.use(flash());
 
 app.use(logger("dev"));
 app.use(express.json());
