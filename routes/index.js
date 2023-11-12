@@ -2,21 +2,40 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user"); // Replace with your actual model
 
-/* GET home page. */
 router.get("/", function (req, res) {
-  // Render the "voucher" view without any error message
   res.render("voucher", {
     errorMessage: null,
   });
 });
 
 router.get("/voucher", function (req, res) {
-  // Render the "voucher" view without any error message
   res.render("voucher", {
     errorMessage: null,
   });
 });
 
+router.get("/preview", function (req, res) {
+  res.render("preview");
+});
+
+router.post("/search", async (req, res) => {
+  try {
+    const { searchInput } = req.body;
+
+    const results = await User.find({
+      $or: [
+        { head: new RegExp(searchInput, "i") },
+        { totalAmount: new RegExp(searchInput, "i") },
+        { voucherDate: new RegExp(searchInput, "i") },
+      ],
+    });
+
+    res.render("search", { results });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
 router.post("/", async function (req, res) {
   try {
     const { voucher, head, totalAmount, voucherDate, chequeNo, chequeDate } =

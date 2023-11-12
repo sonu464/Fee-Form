@@ -482,3 +482,20 @@ body {
 #saveVoucherData:active {
   border: none;
 }
+
+/* -------------------- preview page --------------------- */
+
+.preview-page {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+}
+
+.preview-page > a {
+  color: white;
+  background-color: red;
+  border-radius: 50px;
+  padding: 10px 20px;
+  font-size: 15px;
+  text-decoration: none;
+}
