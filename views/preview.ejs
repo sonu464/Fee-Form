@@ -9,6 +9,11 @@
   </head>
   <body>
     <div class="preview-container">
+      <% if (emptyMessage) { %>
+      <div class="error-message">
+        <p class=""><%= emptyMessage %></p>
+      </div>
+      <% } %>
       <form action="/search" method="post" class="search-container">
         <input
           type="text"

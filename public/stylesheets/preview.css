@@ -5,6 +5,14 @@ body {
   background-color: #f0f0f0;
 }
 
+.error-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+}
+
 .preview-container {
   width: 100%;
   display: flex;

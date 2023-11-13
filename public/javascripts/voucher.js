@@ -53,7 +53,7 @@ addParticular.addEventListener("click", () => {
   rupeeAddingItem.setAttribute("id", particularId);
   rupeeAddingItem.classList.add("rsOptions");
   rupeeAddingItem.innerHTML = ` 
-            <input type="number" class="rupee" min="0" name="rupee" /> 
+            <input type="number" class="rupee" minlength="0" name="rupee" /> 
        `;
 
   rsType.appendChild(rupeeAddingItem);

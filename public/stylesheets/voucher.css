@@ -305,8 +305,7 @@ body {
   display: flex;
   align-items: center;
   padding: 5px;
-  margin: 10px;
-  /* width: 60%; */
+  margin: 8px;
   font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 1.3rem;
 }

@@ -1,41 +1,53 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/user"); // Replace with your actual model
+const User = require("../models/user");
+const flash = require("connect-flash");
 
 router.get("/", function (req, res) {
-  res.render("voucher", {
-    errorMessage: null,
-  });
+  res.render("voucher", { errorMessage: null });
 });
 
 router.get("/voucher", function (req, res) {
-  res.render("voucher", {
-    errorMessage: null,
-  });
+  res.render("voucher", { errorMessage: null });
 });
 
 router.get("/preview", function (req, res) {
-  res.render("preview");
+  res.render("preview", { emptyMessage: null });
+});
+
+router.get("/sercheditem", async function (req, res) {
+  const messages = req.flash();
+  res.send(messages);
 });
 
 router.post("/search", async (req, res) => {
   try {
     const { searchInput } = req.body;
-
-    const results = await User.find({
-      $or: [
-        { head: new RegExp(searchInput, "i") },
-        { totalAmount: new RegExp(searchInput, "i") },
-        { voucherDate: new RegExp(searchInput, "i") },
-      ],
-    });
-
-    res.render("search", { results });
+    if (searchInput.trim() === "") {
+      return res.status(400).render("preview", {
+        emptyMessage: "Please fill in all required fields.",
+      });
+    } else {
+      const results = await User.find({
+        $or: [
+          { head: new RegExp(searchInput, "i") },
+          { totalAmount: new RegExp(searchInput, "i") },
+          { voucherDate: new RegExp(searchInput, "i") },
+          // { voucher: new RegExp(searchInput, "i") },
+        ],
+      });
+      req.flash("success", results);
+      res.render("search", { results });
+    }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    req.flash("error", "Internal Server Error. Please try again later.");
+    res.status(500).render("preview", {
+      emptyMessage: "There is no data related to you query",
+    });
   }
 });
+
 router.post("/", async function (req, res) {
   try {
     const { voucher, head, totalAmount, voucherDate, chequeNo, chequeDate } =
