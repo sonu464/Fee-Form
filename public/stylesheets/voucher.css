@@ -492,9 +492,14 @@ body {
 
 .preview-page > a {
   color: white;
-  background-color: red;
-  border-radius: 50px;
+  background-color: #ff7171;
+  border-radius: 3px;
   padding: 10px 20px;
   font-size: 15px;
   text-decoration: none;
+  font-family: sans-serif;
+}
+
+.preview-page > a:hover {
+  background-color: #b43d3d;
 }

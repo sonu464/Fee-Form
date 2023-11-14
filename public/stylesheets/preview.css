@@ -17,6 +17,7 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
 }
 
@@ -43,9 +44,9 @@ body {
 #findButton {
   padding: 8px 16px;
   font-size: 16px;
-  background-color: #4caf50;
+  background-color: #5c7acb;
   color: white;
-  border: 1px solid #4caf50;
+  border: 1px solid #5c7acb;
   border-radius: 0 4px 4px 0;
   cursor: pointer;
   width: 10%;
@@ -53,5 +54,36 @@ body {
 }
 
 #findButton:hover {
-  background-color: #45a049;
+  background-color: #3c5bb0;
+}
+
+.resultContainer {
+  width: 90%;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+  position: absolute;
+  bottom: 20px;
+  background-color: #8787d55c;
+  border-radius: 3px;
+
+  padding: 15px 20px;
+}
+
+.resultContainer h3 {
+  padding: 20px 0;
+}
+
+.resultContainer > img {
+  width: 50%;
+  height: 100%;
+  border-radius: 2px;
+  object-fit: contain;
+}
+
+.resultParagraph {
+  padding: 15px 0;
+  font-size: 13px;
+  font-family: sans-serif;
 }
