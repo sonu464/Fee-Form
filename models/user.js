@@ -53,6 +53,9 @@ const userSchema = mongoose.Schema({
   particularData: {
     type: Object,
   },
+  paymentType: {
+    type: String,
+  },
 });
 
 // crete model

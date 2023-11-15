@@ -72,7 +72,7 @@ body {
 }
 
 .resultContainer h3 {
-  padding: 20px 0;
+  padding: 12px 0;
 }
 
 .resultContainer > img {
@@ -86,4 +86,25 @@ body {
   padding: 15px 0;
   font-size: 13px;
   font-family: sans-serif;
+}
+
+.searchBtns {
+  display: flex;
+  align-items: center;
+  margin: 7px 0px;
+}
+
+.createAnother {
+  text-decoration: none;
+  color: white;
+  font-family: sans-serif;
+  background-color: #a298dd;
+  padding: 10px;
+  border-radius: 2px;
+  font-size: 13px;
+  transition: all 0.4s;
+}
+
+.createAnother:hover {
+  background-color: #8478c6;
 }

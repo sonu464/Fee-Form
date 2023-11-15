@@ -492,7 +492,7 @@ body {
 
 .preview-page > a {
   color: white;
-  background-color: #ff7171;
+  background-color: #353586df;
   border-radius: 3px;
   padding: 10px 20px;
   font-size: 15px;
@@ -501,5 +501,5 @@ body {
 }
 
 .preview-page > a:hover {
-  background-color: #b43d3d;
+  background-color: #1a1a5cdf;
 }

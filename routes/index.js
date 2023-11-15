@@ -50,8 +50,15 @@ router.post("/search", async (req, res) => {
 
 router.post("/", async function (req, res) {
   try {
-    const { voucher, head, totalAmount, voucherDate, chequeNo, chequeDate } =
-      req.body;
+    const {
+      voucher,
+      head,
+      totalAmount,
+      voucherDate,
+      chequeNo,
+      chequeDate,
+      paymentType,
+    } = req.body;
 
     let particularName = req.body.particular;
     let particularRupee = req.body.rupee;
@@ -61,8 +68,7 @@ router.post("/", async function (req, res) {
       !head ||
       !totalAmount ||
       !voucherDate ||
-      !chequeNo ||
-      !chequeDate ||
+      !paymentType ||
       !particularName ||
       !particularRupee
     ) {
@@ -97,6 +103,7 @@ router.post("/", async function (req, res) {
       chequeDate,
       chequeNo,
       particularData,
+      paymentType,
     });
 
     const registered = await userData.save();
@@ -109,6 +116,16 @@ router.post("/", async function (req, res) {
       .status(400)
       .render("voucher", { errorMessage: "Something went wrong! Try again." });
   }
+});
+
+let voucherDataArray = [];
+router.post("/remove", (req, res) => {
+  const { voucher, head } = req.body;
+
+  voucherDataArray = voucherDataArray.filter(
+    (item) => item.voucher !== voucher
+  );
+  res.json({ success: true, message: "Voucher deleted successfully" });
 });
 
 module.exports = router;

@@ -1,5 +1,6 @@
 function searchedUserDataList(data) {
   const tableData = data.success.map((item) => item);
+  console.log(data);
 
   const tableBody = document.querySelector("#employeeTable tbody");
 
@@ -9,6 +10,7 @@ function searchedUserDataList(data) {
       head: employee.head,
       voucherDate: employee.voucherDate,
       totalAmount: employee.totalAmount,
+      particular: employee.particularData,
     };
 
     const row = document.createElement("tr");
@@ -16,6 +18,7 @@ function searchedUserDataList(data) {
       <td>${employee.voucher}</td>
       <td>${employee.head}</td>
       <td><button class="singleVoucher">View</button></td>
+      <td ><a  class="removeVoucher">Delete</a></td>
     `;
     tableBody.appendChild(row);
 
@@ -23,12 +26,29 @@ function searchedUserDataList(data) {
     row.querySelector(".singleVoucher").addEventListener("click", function () {
       viewDetails(voucherData);
     });
+
+    row.querySelector(".removeVoucher").addEventListener("click", function () {
+      removeHandler(voucherData);
+    });
   });
 }
 
-// function printPage() {
-//   window.print();
-// }
+function removeHandler(voucherData) {
+  fetch("/remove", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(voucherData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
 
 function viewDetails(voucherData) {
   const showViewVoucher = document.querySelector(".showViewVouceher");
@@ -88,7 +108,9 @@ function viewDetails(voucherData) {
 
                             <div class="particular-container">
                               <div class="particular-box">
-                                <div class="fee-type" id="fee-type"></div>
+                                <div class="fee-type" id="fee-type">
+
+                                </div>
                               </div>
                               <div class="amount-box">
                                 <div class="rs-box">
@@ -149,6 +171,50 @@ function viewDetails(voucherData) {
     showViewVoucher.style.display = "none";
     showViewVoucher.innerHTML = "";
   });
+
+  // >>>>>>>>> adding particular item data  ===========================================
+  const particularArray = [];
+  voucherData.particular.map((item) => {
+    const feeType = document.querySelector(".fee-type");
+    const particularId = Math.floor(Math.random() * 1000);
+    const particularAddingItem = document.createElement("span");
+    particularAddingItem.setAttribute("id", particularId);
+    particularAddingItem.classList.add("feeOptions");
+    for (const key in item) {
+      particularAddingItem.innerHTML = `
+      <input value="${key}" class="fee-input" type="text" name="particular" />
+      <button class="particular-delete">X</button>
+    `;
+    }
+    particularArray.push(particularAddingItem);
+    feeType.appendChild(particularAddingItem);
+
+    // >>>>>>>>> adding rupee data  ===========================================
+    const rsType = document.querySelector(".rs");
+    const rupeeAddingItem = document.createElement("span");
+    rupeeAddingItem.setAttribute("id", particularId);
+    rupeeAddingItem.classList.add("rsOptions");
+    for (const key in item) {
+      rupeeAddingItem.innerHTML = `
+                        <input value="${item[key]}" type="number" class="rupee" minlength="0" name="rupee" />
+                   `;
+    }
+
+    rsType.appendChild(rupeeAddingItem);
+  });
+
+  // const selectPaymentMethod = document.getElementById("choose-type");
+  // const selectedOption = selectPaymentMethod.value;
+  // if (selectedOption === voucherData.) {
+  //   const chequeInfo = document.createElement("span");
+  //   chequeInfo.innerHTML = `
+  //        no <input name="chequeNo"  id="chequeNo"    type="number" /> date
+  //        <input name="chequeDate"  id="chequeDate" type="date" class="cheque-date"/>
+  //    `;
+  //   ifCheque.appendChild(chequeInfo);
+  // } else {
+  //   ifCheque.innerHTML = "";
+  // }
 }
 
 // =============================================================
