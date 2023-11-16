@@ -1,6 +1,6 @@
 function searchedUserDataList(data) {
+  document.getElementById("searchInput").value = "";
   const tableData = data.success.map((item) => item);
-  console.log(data);
 
   const tableBody = document.querySelector("#employeeTable tbody");
 
@@ -16,9 +16,10 @@ function searchedUserDataList(data) {
     const row = document.createElement("tr");
     row.innerHTML = `
       <td>${employee.voucher}</td>
+      <td>${employee.voucherDate}</td>
       <td>${employee.head}</td>
       <td><button class="singleVoucher">View</button></td>
-      <td ><a  class="removeVoucher">Delete</a></td>
+      <td ><button class="removeVoucher">Delete</button></td>
     `;
     tableBody.appendChild(row);
 
@@ -33,21 +34,44 @@ function searchedUserDataList(data) {
   });
 }
 
-function removeHandler(voucherData) {
-  fetch("/remove", {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(voucherData),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Success:", data);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+async function removeHandler(voucherData) {
+  try {
+    // Fetch data from the Express server to get voucher numbers
+    const response = await fetch("/getDataFromDatabase");
+    const data = await response.json();
+
+    if (data.success) {
+      const voucherNumbers = data.data.map((item) => item.voucher);
+
+      // Check if the voucher number of the selected voucherData is in the list
+      if (voucherNumbers.includes(voucherData.voucher)) {
+        // Send a request to delete the voucher item
+        const deleteResponse = await fetch("/remove", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            voucher: voucherData.voucher,
+            head: voucherData.head,
+          }),
+        });
+
+        const deleteData = await deleteResponse.json();
+
+        if (deleteData.success) {
+          console.log("Voucher deleted successfully");
+          // You might want to update the UI or perform other actions after deletion
+        } else {
+          console.error("Failed to delete voucher:", deleteData.message);
+        }
+      } else {
+        console.error("Voucher not found for deletion");
+      }
+    }
+  } catch (error) {
+    console.error("Error handling voucher deletion:", error.message);
+  }
 }
 
 function viewDetails(voucherData) {
@@ -174,6 +198,15 @@ function viewDetails(voucherData) {
 
   // >>>>>>>>> adding particular item data  ===========================================
   const particularArray = [];
+  const resultArray = voucherData.particular.map(function (item, index) {
+    return `Index ${index}: ${item.car || item.bus || item.cycle}`;
+  });
+
+  // Log the result
+  resultArray.forEach(function (result) {
+    console.log(result);
+  });
+
   voucherData.particular.map((item) => {
     const feeType = document.querySelector(".fee-type");
     const particularId = Math.floor(Math.random() * 1000);
@@ -230,62 +263,6 @@ async function fetchData() {
 
     const data = await response.json();
     searchedUserDataList(data);
-    // Assuming data.success is an array
-    //   const searchedData = data.success.map((item) => {
-    //     return item;
-    //   });
-
-    //   // Loop through each item in serchedData
-    //   for (let i = 0; i < searchedData.length; i++) {
-    //     let searchedUser = searchedData[i];
-
-    //     // Fill in the form fields with the fetched data for the current item
-    //     document.getElementById("voucher").value = searchedUser.voucher || "";
-    //     document.getElementById("head").value = searchedUser.head || "";
-    //     document.getElementById("date").value = searchedUser.voucherDate || "";
-
-    //     // Assume searchedUser.particularData is an array of objects with properties "feeType" and "rs"
-
-    //     let particulars = searchedUser.particularData.map((item) => {
-    //       return item;
-    //     });
-    //     for (let i = 0; i < particulars.length; i++) {
-    //       let particular = [];
-    //       particular = particulars[i];
-
-    //       const itemContainer = document.getElementById("item-container");
-
-    //       for (const item in particular) {
-    //         if (Object.hasOwnProperty.call(particular, item)) {
-    //           const particularArray = [];
-    //           const feeType = document.querySelector(".fee-type");
-    //           const particularId = Math.floor(Math.random() * 1000);
-    //           const particularAddingItem = document.createElement("span");
-    //           particularAddingItem.setAttribute("id", particularId);
-    //           particularAddingItem.classList.add("feeOptions");
-    //           particularAddingItem.innerHTML = `
-    //                     <input value=${item}  class="fee-input" type="text" name="particular" />
-    //                     <button class="particular-delete">X</button>
-    //                  `;
-    //           particularArray.push(particularAddingItem);
-    //           feeType.appendChild(particularAddingItem);
-
-    //           const rsType = document.querySelector(".rs");
-    //           const rupeeAddingItem = document.createElement("span");
-    //           rupeeAddingItem.setAttribute("id", particularId);
-    //           rupeeAddingItem.classList.add("rsOptions");
-    //           rupeeAddingItem.innerHTML = `
-    //                     <input value=${particular[item]} type="number" class="rupee" minlength="0" name="rupee" />
-    //                `;
-
-    //           rsType.appendChild(rupeeAddingItem);
-    //         }
-    //       }
-    //     }
-
-    //     // Handle "Cheque" specific elements
-    //     const ifChequeSpan = document.getElementById("if-cheque");
-    //   }
   } catch (error) {
     console.error("Error fetching data:", error);
   }

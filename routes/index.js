@@ -7,6 +7,17 @@ router.get("/", function (req, res) {
   res.render("voucher", { errorMessage: null });
 });
 
+// get whole data from database
+router.get("/getDataFromDatabase", async (req, res) => {
+  try {
+    const allUsers = await User.find();
+    res.json({ success: true, data: allUsers });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
+
 router.get("/voucher", function (req, res) {
   res.render("voucher", { errorMessage: null });
 });
@@ -109,6 +120,7 @@ router.post("/", async function (req, res) {
     const registered = await userData.save();
 
     req.flash("newVoucher", voucher);
+    req.flash("userData", userData);
 
     res.status(201).render("stored", { newVoucher: req.flash("newVoucher") });
   } catch (error) {
@@ -119,13 +131,41 @@ router.post("/", async function (req, res) {
 });
 
 let voucherDataArray = [];
-router.post("/remove", (req, res) => {
-  const { voucher, head } = req.body;
+router.post("/remove", async (req, res) => {
+  try {
+    const { voucher, head } = req.body;
 
-  voucherDataArray = voucherDataArray.filter(
-    (item) => item.voucher !== voucher
-  );
-  res.json({ success: true, message: "Voucher deleted successfully" });
+    const deletedVoucher = await User.findOneAndDelete({ voucher, head });
+
+    if (deletedVoucher) {
+      // Successfully deleted the voucher
+      res.status(400).render("store", {
+        success: true,
+        emptyMessage: "Voucher deleted successfully",
+      });
+      return res.json({
+        success: true,
+        message: "Voucher deleted successfully",
+      });
+    } else {
+      // Voucher not found
+      return res
+        .status(404)
+        .json({ success: false, message: "Voucher not found" });
+    }
+  } catch (error) {
+    console.error("Error deleting voucher:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
+  }
 });
+
+// router.get("/search/result", (req, res) => {
+//   const successMessage = req.flash("success");
+//   const errorMessage = req.flash("error");
+//   // Render your result page and pass flash messages
+//   res.render("searchResult", { successMessage, errorMessage });
+// });
 
 module.exports = router;

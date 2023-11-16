@@ -19,30 +19,37 @@
           type="text"
           name="searchInput"
           id="searchInput"
-          placeholder="Enter voucher related head"
+          placeholder="Enter head related to voucher"
         />
         <input type="submit" id="findButton" value="Find" />
+        <div class="chooseHead">
+          <label for="searchedType">Choose a head option</label>
+          <select
+            id="searchedType"
+            class="searchedType"
+            name="searchedType"
+          ></select>
+        </div>
+        <div class="createAnother">
+          <a class="" href="/">Create another voucher</a>
+        </div>
       </form>
 
       <div class="resultContainer">
-        <h3>
-          Help and Services
-          <div class="searchBtns">
-            <a class="createAnother" href="/">Create another voucher</a>
-          </div>
-        </h3>
-        <img src="/images/previewHelp.png" alt="" />
-        <p class="resultParagraph">
-          When you use the search bar, you can easily find what you're looking
-          for by typing in details like the voucher head and the date in the
-          format YYYY-MM-DD. To make your search more specific, enter the exact
-          voucher head information accurately. This helps you get precise
-          results. The date format, YYYY-MM-DD, makes it simple to find
-          information based on a specific date. This way, you can quickly get
-          the data you need, making the search for voucher-related info easy and
-          efficient.
-        </p>
+        <h2>Help and Services</h2>
+        <ul class="resultParagraph">
+          <h3>
+            You can easily find what you're looking for by typing in details
+            like
+          </h3>
+          <li>
+            Voucher head: you can easily choose voucher head from selection box
+          </li>
+          <li>Date format: YYYY-MM-DD.</li>
+        </ul>
       </div>
     </div>
+
+    <script src="/javascripts/previous.js"></script>
   </body>
 </html>

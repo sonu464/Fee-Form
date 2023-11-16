@@ -8,4 +8,40 @@ body {
 }
 
 .dataStored {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.dataStored > h1 {
+  margin-bottom: 30px;
+  font-size: 3rem;
+}
+
+.voucherBtns {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 25px 15px;
+  background-color: rebeccapurple;
+  border-radius: 5px;
+}
+
+.voucherBtns > a {
+  background-color: white;
+  text-decoration: none;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 2px;
+  text-align: center;
+}
+
+.voucherBtns > a:hover {
+  background-color: rgb(228, 201, 255);
+}
+.voucherBtns > a:active {
+  color: rebeccapurple;
 }

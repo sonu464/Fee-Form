@@ -2,7 +2,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f0f0f0;
+  background-color: rebeccapurple;
 }
 
 .error-message {
@@ -24,17 +24,20 @@ body {
 .search-container {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 90%;
   justify-content: center;
-  padding: 20px 0;
+  padding: 10px 5px;
+  border-radius: 5px;
+  background-color: #ffffff40;
 }
 
 #searchInput {
   padding: 8px;
   font-size: 16px;
-  border: 1px solid #ccc;
   border-radius: 4px 0 0 4px;
-  width: 70%;
+  width: 50%;
+  border: none;
+  box-shadow: 0px 3px 5px -1px #686868;
 }
 
 #searchInput:focus {
@@ -44,17 +47,60 @@ body {
 #findButton {
   padding: 8px 16px;
   font-size: 16px;
-  background-color: #5c7acb;
+  background-color: #54439f;
   color: white;
-  border: 1px solid #5c7acb;
+  border: 1px solid #54439f;
   border-radius: 0 4px 4px 0;
   cursor: pointer;
   width: 10%;
   text-align: center;
+  box-shadow: 0px 3px 5px -1px #686868;
 }
 
-#findButton:hover {
-  background-color: #3c5bb0;
+#findButton:hover,
+.chooseHead:hover,
+.createAnother:hover {
+  background-color: #4f3ca0;
+}
+
+.chooseHead,
+.createAnother {
+  background-color: #54439f;
+  padding: 4px 5px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: sans-serif;
+  margin: 0 3px;
+  box-shadow: 0px 3px 5px -1px #686868;
+}
+
+.chooseHead > label {
+  font-size: 12px;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.createAnother > a {
+  color: white;
+  text-decoration: none;
+  font-size: 12px;
+  padding: 7px;
+  text-align: center;
+}
+
+.searchedType {
+  border: none;
+  font-size: 12px;
+  padding: 7px 5px;
+  cursor: pointer;
+  border-radius: 1px;
+}
+
+.searchedType:focus {
+  outline: none;
 }
 
 .resultContainer {
@@ -65,46 +111,24 @@ body {
   margin-top: 5%;
   position: absolute;
   bottom: 20px;
-  background-color: #8787d55c;
+  background-color: #ffffff40;
   border-radius: 3px;
-
   padding: 15px 20px;
 }
 
-.resultContainer h3 {
-  padding: 12px 0;
-}
-
-.resultContainer > img {
-  width: 50%;
-  height: 100%;
-  border-radius: 2px;
-  object-fit: contain;
+.resultContainer h2 {
+  padding: 7px 0;
 }
 
 .resultParagraph {
   padding: 15px 0;
   font-size: 13px;
   font-family: sans-serif;
+  padding: 20px;
 }
 
 .searchBtns {
   display: flex;
   align-items: center;
   margin: 7px 0px;
-}
-
-.createAnother {
-  text-decoration: none;
-  color: white;
-  font-family: sans-serif;
-  background-color: #a298dd;
-  padding: 10px;
-  border-radius: 2px;
-  font-size: 13px;
-  transition: all 0.4s;
-}
-
-.createAnother:hover {
-  background-color: #8478c6;
 }

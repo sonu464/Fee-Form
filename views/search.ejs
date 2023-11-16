@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="/stylesheets/preview.css" />
     <link rel="stylesheet" href="/stylesheets/search.css" />
     <link rel="stylesheet" href="/stylesheets/voucher.css" />
+
+    <script src="/javascripts/previous.js"></script>
   </head>
   <body>
     <div class="preview-container">
@@ -15,16 +17,28 @@
           type="text"
           name="searchInput"
           id="searchInput"
-          placeholder="Enter voucher related head"
+          placeholder="Enter head related to voucher"
         />
         <input type="submit" id="findButton" value="Find" />
+        <div class="chooseHead">
+          <label for="exampleSelect">Choose an head options</label>
+          <select
+            id="searchedType"
+            class="searchedType"
+            name="searchedType"
+          ></select>
+        </div>
+        <div class="createAnother">
+          <a class="" href="/">Create another voucher</a>
+        </div>
       </form>
 
       <div class="tableData">
         <table id="employeeTable">
           <thead>
             <tr>
-              <th>Name</th>
+              <th>Voucher No.</th>
+              <th>Voucher Date</th>
               <th>Head</th>
               <th>View Section</th>
               <th>Remove Voucher</th>
@@ -35,10 +49,6 @@
       </div>
 
       <div class="showViewVouceher"></div>
-
-      <div class="searchBtns">
-        <a class="createAnother" href="/">Create another voucher</a>
-      </div>
     </div>
 
     <script src="/javascripts/search.js"></script>
