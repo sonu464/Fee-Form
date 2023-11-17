@@ -83,21 +83,25 @@ router.post("/", async function (req, res) {
       !particularName ||
       !particularRupee
     ) {
-      // Check if any of the required fields are empty and render the "voucher" view with an error message
       return res.status(400).render("voucher", {
         errorMessage: "Please fill in all required fields.",
       });
     }
 
+    // this is about particular data conditions
     const particularData = [];
+    const particularObject = {};
 
-    for (let i = 0; i < particularName.length; i++) {
-      const combinedObject = {
-        [particularName[i]]: particularRupee[i],
-      };
-      particularData.push(combinedObject);
+    if (!Array.isArray(particularName) && !Array.isArray(particularRupee)) {
+      particularObject[particularName] = particularRupee;
+    } else {
+      for (let i = 0; i < particularName.length; i++) {
+        particularObject[particularName[i]] = particularRupee[i];
+      }
     }
+    particularData.push(particularObject);
 
+    // this is about voucher number
     const latestUserData = await User.findOne().sort({ voucher: -1 });
 
     if (latestUserData && voucher == latestUserData.voucher) {
@@ -106,6 +110,7 @@ router.post("/", async function (req, res) {
       });
     }
 
+    // here we add our voucher data to backend
     const userData = new User({
       voucher,
       head,
@@ -130,7 +135,6 @@ router.post("/", async function (req, res) {
   }
 });
 
-let voucherDataArray = [];
 router.post("/remove", async (req, res) => {
   try {
     const { voucher, head } = req.body;

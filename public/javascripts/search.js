@@ -1,4 +1,5 @@
 function searchedUserDataList(data) {
+  console.log(data);
   document.getElementById("searchInput").value = "";
   const tableData = data.success.map((item) => item);
 
@@ -104,16 +105,17 @@ function viewDetails(voucherData) {
                                     minlength="1"
                                     maxlength="10000"
                                     value=${voucherData.voucher}
+                                    disabled
                                   />
                                 </div>
                                 <div class="head-box">
                                   <h4>Head</h4>
-                                  <input value=${voucherData.head} name="head" type="text" id="head" />
+                                  <input value=${voucherData.head} name="head" type="text" id="head" disabled/>
                                 </div>
                               </div>
                               <div class="t-right">
                                 <h4>Date</h4>
-                                <input value=${voucherData.voucherDate} name="voucherDate" type="date" id="date" />
+                                <input value=${voucherData.voucherDate} name="voucherDate" type="date" id="date" disabled/>
                               </div>
                             </div>
                           </div>
@@ -177,7 +179,7 @@ function viewDetails(voucherData) {
                               <h5>
                                 Received Payment of Rs
                                 <input type="number" id="payment-type" value=${voucherData.totalAmount} disabled /> in
-                                <select id="choose-type">
+                                <select id="choose-type" disabled>
                                   <option value="Cash">Cash</option>
                                   <option value="Cheque">Cheque</option>
                                 </select>
@@ -198,42 +200,37 @@ function viewDetails(voucherData) {
 
   // >>>>>>>>> adding particular item data  ===========================================
   const particularArray = [];
-  const resultArray = voucherData.particular.map(function (item, index) {
-    return `Index ${index}: ${item.car || item.bus || item.cycle}`;
-  });
-
-  // Log the result
-  resultArray.forEach(function (result) {
-    console.log(result);
-  });
-
   voucherData.particular.map((item) => {
     const feeType = document.querySelector(".fee-type");
-    const particularId = Math.floor(Math.random() * 1000);
-    const particularAddingItem = document.createElement("span");
-    particularAddingItem.setAttribute("id", particularId);
-    particularAddingItem.classList.add("feeOptions");
-    for (const key in item) {
-      particularAddingItem.innerHTML = `
-      <input value="${key}" class="fee-input" type="text" name="particular" />
-      <button class="particular-delete">X</button>
-    `;
-    }
-    particularArray.push(particularAddingItem);
-    feeType.appendChild(particularAddingItem);
-
-    // >>>>>>>>> adding rupee data  ===========================================
     const rsType = document.querySelector(".rs");
-    const rupeeAddingItem = document.createElement("span");
-    rupeeAddingItem.setAttribute("id", particularId);
-    rupeeAddingItem.classList.add("rsOptions");
-    for (const key in item) {
-      rupeeAddingItem.innerHTML = `
-                        <input value="${item[key]}" type="number" class="rupee" minlength="0" name="rupee" />
-                   `;
-    }
+    console.log(Object.entries(item));
+    Object.entries(item).forEach(([key, value]) => {
+      // Create particular input
+      const particularId = Math.floor(Math.random() * 1000);
+      const particularAddingItem = document.createElement("span");
+      particularAddingItem.setAttribute("id", particularId);
+      particularAddingItem.classList.add("feeOptions");
 
-    rsType.appendChild(rupeeAddingItem);
+      particularAddingItem.innerHTML = `
+        <input value="${key}" class="fee-input" type="text" name="${key}" disabled/>
+        <button class="particular-delete">X</button>
+      `;
+
+      particularArray.push(particularAddingItem);
+      feeType.appendChild(particularAddingItem);
+
+      // Create rupee input
+      const rupeeId = Math.floor(Math.random() * 1000); // Use a different ID for rupee
+      const rupeeAddingItem = document.createElement("span");
+      rupeeAddingItem.setAttribute("id", rupeeId);
+      rupeeAddingItem.classList.add("rsOptions");
+
+      rupeeAddingItem.innerHTML = `
+        <input value="${value}" type="number" class="rupee" minlength="0" name="rupee" disabled/>
+      `;
+
+      rsType.appendChild(rupeeAddingItem);
+    });
   });
 
   // const selectPaymentMethod = document.getElementById("choose-type");

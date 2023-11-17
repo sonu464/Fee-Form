@@ -10,7 +10,10 @@ async function getData() {
       });
 
       const optionsData = [];
-
+      optionsData.push({
+        value: "",
+        text: "Choose head option",
+      });
       for (let i = 0; i < optionsHead.length; i++) {
         optionsData.push({ value: optionsHead[i], text: optionsHead[i] });
       }
