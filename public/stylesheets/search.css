@@ -55,7 +55,8 @@ th {
 }
 
 .singleVoucher,
-.removeVoucher {
+.removeVoucher,
+.editVoucher {
   color: white;
   padding: 5px 15px;
   font-size: 10px;

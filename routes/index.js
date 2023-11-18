@@ -165,6 +165,40 @@ router.post("/remove", async (req, res) => {
   }
 });
 
+// Edit voucher
+
+router.post("/editvoucher", async (req, res) => {
+  const editedVoucherData = req.body.editedVoucherData;
+
+  try {
+    for (const item of editedVoucherData) {
+      const voucher = item.voucherNumber + 1;
+      const head = item.voucherHead;
+      const voucherDate = item.voucherDate;
+
+      const editedVoucher = await User.updateMany({
+        voucher,
+        head,
+        voucherDate,
+      });
+
+      console.log(editedVoucher);
+
+      // if (editedVoucher) {
+      //   console.log(editedVoucher);
+      // } else {
+      //   console.log(
+      //     `No user found for voucherNumber: ${voucherNumber} and voucherHead: ${voucherHead}`
+      //   );
+      // }
+    }
+
+    res.status(200).json({ success: true, message: "Data found successfully" });
+  } catch (error) {
+    console.error("Error finding data:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});
 // router.get("/search/result", (req, res) => {
 //   const successMessage = req.flash("success");
 //   const errorMessage = req.flash("error");
