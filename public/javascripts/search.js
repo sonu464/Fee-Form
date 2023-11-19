@@ -23,7 +23,6 @@ async function editVoucher(voucherData) {
                                 <div class="voucher-box">
                                   <h4>Voucher No.</h4>
                                   <input
-                                    name="voucher
                                     type="number"
                                     id="voucher"
                                     minlength="1"
@@ -34,12 +33,12 @@ async function editVoucher(voucherData) {
                                 </div>
                                 <div class="head-box">
                                   <h4>Head</h4>
-                                  <input value=${voucherData.head} name="head" type="text" id="head" name="voucherHead" />
+                                  <input value=${voucherData.head} name="head" type="text" id="head" />
                                 </div>
                               </div>
                               <div class="t-right">
                                 <h4>Date</h4>
-                                <input value=${voucherData.voucherDate} name="voucherDate" type="date" id="date" />
+                                <input value=${voucherData.voucherDate} type="date" id="date" />
                               </div>
                             </div>
                           </div>
@@ -130,7 +129,7 @@ async function editVoucher(voucherData) {
   voucherData.particular.map((item) => {
     const feeType = document.querySelector(".fee-type");
     const rsType = document.querySelector(".rs");
-    console.log(Object.entries(item));
+    //  here we convert object to array 
     Object.entries(item).forEach(([key, value]) => {
       // Create particular input
       const particularId = Math.floor(Math.random() * 1000);
@@ -139,7 +138,7 @@ async function editVoucher(voucherData) {
       particularAddingItem.classList.add("feeOptions");
 
       particularAddingItem.innerHTML = `
-        <input value="${key}" class="fee-input" type="text" name="${key}" />
+        <input value="${key}" class="fee-input" type="text" />
         <button class="particular-delete">X</button>
       `;
 
@@ -184,7 +183,44 @@ async function editVoucher(voucherData) {
         }),
       });
 
-      console.log(editedResponse.json());
+      const editedResponseData = await editedResponse.json();
+      console.log(editedResponseData);
+
+      if (editedResponseData.success) {
+        const showViewVouceher = document.querySelector(".showViewVouceher");
+        const showVoucherUpdated = document.querySelector(
+          ".showVoucherUpdated"
+        );
+        showViewVouceher.style.display = "none";
+        showVoucherUpdated.style.transform = " translate(0, 0)";
+
+        // close edited voucher
+        const closeBtn = document.createElement("div");
+        closeBtn.classList.add("editedVoucherCloseBtn");
+        closeBtn.textContent = "X";
+        closeBtn.addEventListener("click", () => {
+          showVoucherUpdated.style.transform = " translate(0, -110%)";
+          window.location.href = "/preview";
+        });
+
+        const styledDiv = document.createElement("div");
+        styledDiv.classList.add("showView");
+
+        const title = document.createElement("h2");
+        title.textContent = `${editedResponseData.message}`;
+
+        const paragraph = document.createElement("p");
+        paragraph.textContent =
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+
+        // Append the h2 and p elements to the div(styledDiv)
+        styledDiv.appendChild(title);
+        styledDiv.appendChild(paragraph);
+
+        // Append the div to the body
+        showVoucherUpdated.appendChild(styledDiv);
+        showVoucherUpdated.appendChild(closeBtn);
+      }
     });
   } catch (error) {
     console.error("Error adding event listener:", error);
@@ -263,17 +299,17 @@ function viewDetails(voucherData) {
                                     minlength="1"
                                     maxlength="10000"
                                     value=${voucherData.voucher}
-                                    
+                                    disabled
                                   />
                                 </div>
                                 <div class="head-box">
                                   <h4>Head</h4>
-                                  <input value=${voucherData.head} name="head" type="text" id="head" />
+                                  <input value=${voucherData.head} name="head" type="text" id="head" disabled />
                                 </div>
                               </div>
                               <div class="t-right">
                                 <h4>Date</h4>
-                                <input value=${voucherData.voucherDate} name="voucherDate" type="date" id="date" />
+                                <input value=${voucherData.voucherDate} name="voucherDate" type="date" id="date" disabled/>
                               </div>
                             </div>
                           </div>
@@ -283,7 +319,7 @@ function viewDetails(voucherData) {
                             <div class="heading">
                               <div class="particular">
                                 <h4>PARTICULARS</h4>
-                                <button type="button" id="add-particular">+</button>
+                               
                               </div>
                               <div class="amount">
                                 <h5>Amount</h5>
@@ -319,7 +355,7 @@ function viewDetails(voucherData) {
                           <div class="center2-box">
                             <div class="center2-left">
                               <h5>Passed for Payment of Rs</h5>
-                              <input name="totalAmount" type="number" id="passes-payment" value=${voucherData.totalAmount} />
+                              <input name="totalAmount" type="number" id="passes-payment" value=${voucherData.totalAmount} disabled/>
                             </div>
                             <div class="center2-right">
                               <div class="accountant">
@@ -336,8 +372,8 @@ function viewDetails(voucherData) {
                             <div class="payment-method">
                               <h5>
                                 Received Payment of Rs
-                                <input type="number" id="payment-type" value=${voucherData.totalAmount}  /> in
-                                <select id="choose-type" >
+                                <input type="number" id="payment-type" value=${voucherData.totalAmount}  disabled/> in
+                                <select id="choose-type" disabled>
                                   <option value="Cash">Cash</option>
                                   <option value="Cheque">Cheque</option>
                                 </select>
@@ -366,12 +402,11 @@ function viewDetails(voucherData) {
       // Create particular input
       const particularId = Math.floor(Math.random() * 1000);
       const particularAddingItem = document.createElement("span");
-      particularAddingItem.setAttribute("id", particularId);
+      // particularAddingItem.setAttribute("id", particularId);
       particularAddingItem.classList.add("feeOptions");
 
       particularAddingItem.innerHTML = `
-        <input value="${key}" class="fee-input" type="text" name="${key}" />
-        <button class="particular-delete">X</button>
+        <input value="${key}" class="fee-input" type="text" name="${key}" disabled/>
       `;
 
       particularArray.push(particularAddingItem);
@@ -384,7 +419,7 @@ function viewDetails(voucherData) {
       rupeeAddingItem.classList.add("rsOptions");
 
       rupeeAddingItem.innerHTML = `
-        <input value="${value}" type="number" class="rupee" minlength="0" name="rupee" />
+        <input value="${value}" type="number" class="rupee" minlength="0" name="rupee" disabled/>
       `;
 
       rsType.appendChild(rupeeAddingItem);
@@ -393,7 +428,6 @@ function viewDetails(voucherData) {
 }
 
 function searchedUserDataList(data) {
-  console.log(data);
   document.getElementById("searchInput").value = "";
   const tableData = data.success.map((item) => item);
 

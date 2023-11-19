@@ -7,12 +7,65 @@ body {
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
   width: 100%;
-  padding: 5% 0;
   font-family: Georgia, "Times New Roman", Times, serif;
+  background-color: rebeccapurple;
 }
 
+/* navbar css */
+
+header {
+  background-color: #000000b0;
+  padding: 10px px 0px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5%;
+  box-shadow: 0px 0px 6px 2px black;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+}
+
+.navLogo {
+  width: 50%;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navLogo img {
+  width: 40px; /* Adjust the size of your logo */
+  height: auto;
+  margin-right: 10px;
+}
+
+.logo-text {
+  color: #fff;
+  font-size: 1.2em;
+}
+
+.nav-links a {
+  color: black;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 1.1em;
+}
+
+/* Add a hover effect to the links */
+.nav-links a:hover {
+  border-bottom: 2px solid #fff; /* Adds an underline on hover */
+}
+
+/* ------------------------ */
 /* ---------------- Form --------------- */
 #form {
   display: flex;
@@ -23,7 +76,7 @@ body {
 }
 
 .error-message {
-  color: red;
+  color: black;
   font-weight: bold;
   font-size: 15px;
 }
@@ -485,14 +538,8 @@ body {
 /* -------------------- preview page --------------------- */
 
 .preview-page {
-  position: absolute;
-  top: 10%;
-  right: 5%;
-}
-
-.preview-page > a {
-  color: white;
-  background-color: #353586df;
+  color: #4d3268;
+  background-color: #ffffffc9;
   border-radius: 3px;
   padding: 10px 20px;
   font-size: 15px;
@@ -500,6 +547,6 @@ body {
   font-family: sans-serif;
 }
 
-.preview-page > a:hover {
-  background-color: #1a1a5cdf;
+.preview-page:hover {
+  /* background-color: ; */
 }

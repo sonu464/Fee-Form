@@ -102,3 +102,47 @@ th {
 .createAnother:hover {
   background-color: #4f3ca0;
 }
+
+.showVoucherUpdated {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  align-items: center;
+  justify-content: center;
+  background-color: #6a6a6a38;
+  backdrop-filter: blur(4px);
+  transform: translate(0, -110%);
+  transition: all 0.5s ease-in;
+}
+
+.showView {
+  width: 60%;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 2px 2px 12px -2px black;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 27px 30px;
+  text-align: center;
+  gap: 15px;
+}
+
+.editedVoucherCloseBtn {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  background-color: white;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  font-size: 13px;
+  font-family: sans-serif;
+  color: #484848;
+  cursor: pointer;
+}
