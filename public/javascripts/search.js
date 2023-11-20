@@ -119,16 +119,30 @@ async function editVoucher(voucherData) {
   `;
   showViewVoucher.appendChild(viewVoucherForm);
   showViewVoucher.style.display = "block";
+
+  // Close edit voucher
   document.querySelector(".closeVoucher").addEventListener("click", () => {
     showViewVoucher.style.display = "none";
     showViewVoucher.innerHTML = "";
   });
-  const addParticular = document.getElementById("add-particular");
-  addParticular.addEventListener("click", addingVoucherParticular);
 
-  // Adding particulars to voucher -------------------------------
+  // cheque data filled to form ----------------------------
+  const ifCheque = document.getElementById("if-cheque");
+  const selectedOption = voucherData.paymentType;
+
+  const choosePaymentType = document.getElementById("choose-type");
+  choosePaymentType.value = selectedOption;
+  if (selectedOption === "Cheque") {
+    const chequeInfo = document.createElement("span");
+    chequeInfo.innerHTML = ` 
+           no <input name="chequeNo"  id="chequeNo" value="${voucherData.chequeNo}"   type="number"  /> date 
+           <input name="chequeDate"  id="chequeDate" value="${voucherData.chequeDate}" type="date" class="cheque-date"  /> 
+       `;
+    ifCheque.appendChild(chequeInfo);
+  }
+
+  // Adding particulars to voucher ----------------------------
   function addingVoucherParticular() {
-    console.log("done");
     const paymentType = document.getElementById("payment-type");
     const rsType = document.getElementById("rs-type");
     const feeType = document.getElementById("fee-type");
@@ -148,6 +162,7 @@ async function editVoucher(voucherData) {
     particularArray.push(particularAddingItem);
     // Adding rupee box
     const rupeeAddingItem = document.createElement("span");
+
     rupeeAddingItem.setAttribute("id", particularId);
     rupeeAddingItem.classList.add("rsOptions");
     rupeeAddingItem.innerHTML = ` 
@@ -218,7 +233,10 @@ async function editVoucher(voucherData) {
     totalAmount();
   }
 
-  // Adding particular item data ----------------------------------
+  const addParticular = document.getElementById("add-particular");
+  addParticular.addEventListener("click", addingVoucherParticular);
+
+  // Adding particular item data ----------------------------
   const particularArray = [];
   voucherData.particular.map((item) => {
     const feeType = document.querySelector(".fee-type");
@@ -233,7 +251,6 @@ async function editVoucher(voucherData) {
 
       particularAddingItem.innerHTML = `
         <input value="${key}" class="fee-input" type="text" />
-        <button class="particular-delete">X</button>
       `;
 
       particularArray.push(particularAddingItem);
@@ -251,6 +268,44 @@ async function editVoucher(voucherData) {
 
       rsType.appendChild(rupeeAddingItem);
     });
+  });
+
+  document.querySelectorAll(".rupee").forEach((item) => {
+    item.addEventListener("input", () => {
+      const paymentType = document.getElementById("payment-type");
+      const totalMoney = document.getElementById("total-money");
+      const passesPayment = document.getElementById("passes-payment");
+
+      const rupee = document.querySelectorAll(".rupee");
+      // let total = document.getElementById("passes-payment").value;
+      let total = 0;
+      rupee.forEach((item) => {
+        total += parseFloat(item.value || 0);
+        totalMoney.innerHTML = ` <h1>Rs ${total}</h1>`;
+        passesPayment.value = total;
+        globalTotalAmount = total;
+        paymentType.value = total;
+      });
+    });
+  });
+
+  document.getElementById("choose-type").addEventListener("change", () => {
+    const selectPaymentMethod = document.getElementById("choose-type");
+    const ifCheque = document.getElementById("if-cheque");
+    const selectedOption = selectPaymentMethod.value;
+
+    const choosePaymentType = document.getElementById("choose-type");
+    choosePaymentType.value = selectedOption;
+    if (selectedOption === "Cheque") {
+      const chequeInfo = document.createElement("span");
+      chequeInfo.innerHTML = ` 
+           no <input name="chequeNo"  id="chequeNo" value="${voucherData.chequeNo}"   type="number"  /> date 
+           <input name="chequeDate"  id="chequeDate" value="${voucherData.chequeDate}" type="date" class="cheque-date"  /> 
+       `;
+      ifCheque.appendChild(chequeInfo);
+    } else {
+      ifCheque.innerHTML = "";
+    }
   });
 
   // Sending data to database ----------------------------
@@ -285,6 +340,19 @@ async function editVoucher(voucherData) {
       }
       particularData.push(particularObject);
 
+      let chequeNo;
+      let chequeDate;
+      const type = document.getElementById("choose-type").value;
+      if (type === "cheque") {
+        chequeNo = document.getElementById("chequeNo").value;
+        chequeDate = document.getElementById("chequeDate").value;
+      } else {
+        chequeNo = "";
+        chequeDate = "";
+      }
+
+      console.log(chequeDate, "and", chequeNo);
+
       // create a array, use to send this array to database for updating the voucher
       const editedVoucherData = [
         {
@@ -292,6 +360,9 @@ async function editVoucher(voucherData) {
           voucherHead: document.getElementById("head").value,
           voucherDate: document.getElementById("date").value,
           totalAmount: document.getElementById("passes-payment").value,
+          paymentType: document.getElementById("choose-type").value,
+          chequeNo,
+          chequeDate,
           particularData,
         },
       ];
@@ -375,20 +446,40 @@ async function removeHandler(voucherData) {
         });
 
         const deleteData = await deleteResponse.json();
+        console.log(deleteData);
 
         if (deleteData.success) {
           console.log("Voucher deleted successfully");
-          // You might want to update the UI or perform other actions after deletion
+
+          // Redirect to the "preview" page
+          window.location.href = "/preview";
         } else {
           console.error("Failed to delete voucher:", deleteData.message);
+          // Handle error scenario, e.g., show an error message
         }
       } else {
         console.error("Voucher not found for deletion");
+        // Show a message indicating that the voucher was not found
+        showErrorMessage("Voucher not found for deletion");
       }
     }
   } catch (error) {
     console.error("Error handling voucher deletion:", error.message);
+    // Show a generic error message
+    showErrorMessage("An error occurred while deleting the voucher");
   }
+}
+
+// Function to show success messages
+function showSuccessMessage(message) {
+  // Implement your logic to display success messages to the user
+  alert(message); // You can replace this with your custom UI logic
+}
+
+// Function to show error messages
+function showErrorMessage(message) {
+  // Implement your logic to display error messages to the user
+  alert(message); // You can replace this with your custom UI logic
 }
 
 // >>>>>>>>> View Voucher ==========================================
@@ -520,7 +611,6 @@ function viewDetails(voucherData) {
   voucherData.particular.map((item) => {
     const feeType = document.querySelector(".fee-type");
     const rsType = document.querySelector(".rs");
-    console.log(Object.entries(item));
     Object.entries(item).forEach(([key, value]) => {
       // Create particular input
       const particularId = Math.floor(Math.random() * 1000);
@@ -549,11 +639,8 @@ function viewDetails(voucherData) {
     });
   });
 
-  // function to check payment by cash or cheque
-  const selectPaymentMethod = document.getElementById("choose-type");
+  //check payment by cash or cheque
   const ifCheque = document.getElementById("if-cheque");
-
-  console.log(voucherData.paymentType);
   const selectedOption = voucherData.paymentType;
 
   const choosePaymentType = document.getElementById("choose-type");
@@ -561,8 +648,8 @@ function viewDetails(voucherData) {
   if (selectedOption === "Cheque") {
     const chequeInfo = document.createElement("span");
     chequeInfo.innerHTML = ` 
-           no <input name="chequeNo"  id="chequeNo"    type="number"/> date 
-           <input name="chequeDate"  id="chequeDate" type="date" class="cheque-date"/> 
+           no <input name="chequeNo"  id="chequeNo" value="${voucherData.chequeNo}"   type="number" disabled /> date 
+           <input name="chequeDate"  id="chequeDate" value="${voucherData.chequeDate}" type="date" class="cheque-date" disabled /> 
        `;
     ifCheque.appendChild(chequeInfo);
   } else {
@@ -585,6 +672,8 @@ function searchedUserDataList(data) {
       totalAmount: employee.totalAmount,
       particular: employee.particularData,
       paymentType: employee.paymentType,
+      chequeDate: employee.chequeDate,
+      chequeNo: employee.chequeNo,
     };
 
     const row = document.createElement("tr");
@@ -604,9 +693,11 @@ function searchedUserDataList(data) {
     });
 
     // Attach a click event listener to delete voucher
-    row.querySelector(".removeVoucher").addEventListener("click", function () {
-      removeHandler(voucherData);
-    });
+    row
+      .querySelector(".removeVoucher")
+      .addEventListener("click", async function () {
+        removeHandler(voucherData);
+      });
 
     // Attach a click event listener to edit voucher
     row.querySelector(".editVoucher").addEventListener("click", function () {
@@ -615,6 +706,7 @@ function searchedUserDataList(data) {
   });
 }
 
+// >>>>>>>>>  Voucher Data ==========================================
 async function fetchData() {
   try {
     const response = await fetch("http://localhost:3000/sercheditem", {

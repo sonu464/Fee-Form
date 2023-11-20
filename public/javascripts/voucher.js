@@ -10,13 +10,13 @@ const voucherNo = document.getElementById("voucher");
 let globalTotalAmount = 0;
 let particularArray = [];
 
-voucherNo.addEventListener("input", () => {
+voucherNo.addEventListener("change", () => {
   if (voucherNo.value.trim() < 1) {
     voucherNo.value = "";
   }
 });
 
-// function to check payment by cash or cheque
+// function to check payment by cash or cheque ==================================
 const checkMethod = () => {
   const selectedOption = selectPaymentMethod.value;
   if (selectedOption === "Cheque") {
@@ -31,7 +31,7 @@ const checkMethod = () => {
   }
 };
 
-// Function to check the payment method
+// Function to check the payment method ==================================
 checkMethod();
 
 // Adding particulars
@@ -120,16 +120,53 @@ addParticular.addEventListener("click", () => {
   totalAmount();
 });
 
-// function onSubmitHandler(event) {
-//   event.preventDefault();
+// Adding voucher number dynamically ==================================
+function checkVoucherNumber(data) {
+  if (data.success) {
+    const voucherData = data.data.map((item) => item);
+    const voucherNumbers = [];
+    voucherData.forEach((item) => {
+      voucherNumbers.push(item.voucher);
+    });
 
-//   console.log("done");
-// }
+    if (voucherNumbers.length < 1) {
+      voucherNo.value = 1;
+    } else {
+      const nextVoucherValue = Math.max(...voucherNumbers);
+      voucherNo.value = nextVoucherValue + 1;
 
-// // Attach a click event handler to the "save" button
-// document
-//   .getElementById("saveVoucherData")
-//   .addEventListener("click", onSubmitHandler);
+      voucherNo.addEventListener("change", () => {
+        const voucherBox = document.querySelector(".voucher-box");
+        const voucherAlertDiv = document.createElement("div");
+        voucherAlertDiv.id = "voucherNoAlert";
+        voucherAlertDiv.className = "voucherNo-alert";
+        voucherAlertDiv.textContent = `please do not change this field `;
+        voucherNo.value = nextVoucherValue + 1;
+        voucherBox.appendChild(voucherAlertDiv);
 
-// Add an event listener to the select element to listen for changes
+        setInterval(() => {
+          voucherAlertDiv.style.display = "none";
+        }, 2000);
+      });
+    }
+  }
+}
+
+// fucntion to get data from database ==================================
+async function getDataFromDB() {
+  const response = await fetch("/getDataFromDatabase", {
+    method: "GET",
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+
+  const data = await response.json();
+  checkVoucherNumber(data);
+}
+
+// Add an event listener to the select element to listen for changes ==================================
 selectPaymentMethod.addEventListener("change", checkMethod);
+
+getDataFromDB();

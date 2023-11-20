@@ -135,33 +135,24 @@ router.post("/", async function (req, res) {
   }
 });
 
+// Remove voucher
 router.post("/remove", async (req, res) => {
   try {
     const { voucher, head } = req.body;
-
     const deletedVoucher = await User.findOneAndDelete({ voucher, head });
 
     if (deletedVoucher) {
       // Successfully deleted the voucher
-      res.status(400).render("store", {
-        success: true,
-        emptyMessage: "Voucher deleted successfully",
-      });
-      return res.json({
-        success: true,
-        message: "Voucher deleted successfully",
-      });
+      res
+        .status(200)
+        .json({ success: true, message: "Voucher deleted successfully" });
     } else {
       // Voucher not found
-      return res
-        .status(404)
-        .json({ success: false, message: "Voucher not found" });
+      res.status(404).json({ success: false, message: "Voucher not found" });
     }
   } catch (error) {
     console.error("Error deleting voucher:", error);
-    return res
-      .status(500)
-      .json({ success: false, message: "Internal Server Error" });
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 });
 
@@ -176,6 +167,9 @@ router.post("/editvoucher", async (req, res) => {
       const voucherDate = item.voucherDate;
       const particularData = item.particularData;
       const totalAmount = item.totalAmount;
+      const chequeDate = item.chequeDate;
+      const chequeNo = item.chequeNo;
+      const paymentType = item.paymentType;
 
       const editedVoucher = await User.findOneAndUpdate(
         { voucher }, // Search for the document based on the voucher number
@@ -185,6 +179,9 @@ router.post("/editvoucher", async (req, res) => {
             voucherDate,
             particularData,
             totalAmount,
+            chequeDate,
+            chequeNo,
+            paymentType,
           },
         },
         { new: true }
@@ -201,12 +198,5 @@ router.post("/editvoucher", async (req, res) => {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 });
-
-// router.get("/search/result", (req, res) => {
-//   const successMessage = req.flash("success");
-//   const errorMessage = req.flash("error");
-//   // Render your result page and pass flash messages
-//   res.render("searchResult", { successMessage, errorMessage });
-// });
 
 module.exports = router;
