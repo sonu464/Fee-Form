@@ -84,7 +84,7 @@ async function editVoucher(voucherData) {
                           <div class="center2-box">
                             <div class="center2-left">
                               <h5>Passed for Payment of Rs</h5>
-                              <input name="totalAmount" type="number" id="passes-payment" value=${voucherData.totalAmount} />
+                              <input name="totalAmount" type="number" id="passes-payment" value=${voucherData.totalAmount} disabled />
                             </div>
                             <div class="center2-right">
                               <div class="accountant">
@@ -101,7 +101,7 @@ async function editVoucher(voucherData) {
                             <div class="payment-method">
                               <h5>
                                 Received Payment of Rs
-                                <input type="number" id="payment-type" value=${voucherData.totalAmount}  /> in
+                                <input type="number" id="payment-type" value=${voucherData.totalAmount} disabled  /> in
                                 <select id="choose-type" >
                                   <option value="Cash">Cash</option>
                                   <option value="Cheque">Cheque</option>
@@ -123,13 +123,107 @@ async function editVoucher(voucherData) {
     showViewVoucher.style.display = "none";
     showViewVoucher.innerHTML = "";
   });
+  const addParticular = document.getElementById("add-particular");
+  addParticular.addEventListener("click", addingVoucherParticular);
 
-  // >>>>>>>>> adding particular item data  ===========================================
+  // Adding particulars to voucher -------------------------------
+  function addingVoucherParticular() {
+    console.log("done");
+    const paymentType = document.getElementById("payment-type");
+    const rsType = document.getElementById("rs-type");
+    const feeType = document.getElementById("fee-type");
+    const totalMoney = document.getElementById("total-money");
+    const passesPayment = document.getElementById("passes-payment");
+
+    const particularId = Math.floor(Math.random() * 1000);
+    // Adding particular box
+    const particularAddingItem = document.createElement("span");
+    particularAddingItem.setAttribute("id", particularId);
+    particularAddingItem.classList.add("feeOptions");
+    particularAddingItem.innerHTML = ` 
+              <input  class="fee-input" type="text" name="particular" /> 
+              <button class="particular-delete">X</button> 
+           `;
+
+    particularArray.push(particularAddingItem);
+    // Adding rupee box
+    const rupeeAddingItem = document.createElement("span");
+    rupeeAddingItem.setAttribute("id", particularId);
+    rupeeAddingItem.classList.add("rsOptions");
+    rupeeAddingItem.innerHTML = ` 
+              <input type="number" class="rupee" minlength="0" name="rupee" /> 
+         `;
+
+    rsType.appendChild(rupeeAddingItem);
+    feeType.appendChild(particularAddingItem);
+
+    // Add an event listener to removeParticular
+    const removeParticularItem = (btnParentId) => {
+      const particularToRemove = document.getElementById(btnParentId);
+      const rupeeId = rupeeAddingItem.getAttribute("id");
+
+      if (btnParentId === rupeeId) {
+        particularToRemove.remove();
+        rupeeAddingItem.remove();
+
+        // Recalculate the total amount after removal
+        totalAmount();
+      }
+    };
+
+    const removeParticular = document.querySelectorAll(".particular-delete");
+    removeParticular.forEach((item) => {
+      item.addEventListener("click", () => {
+        const btnParentId = item.parentElement.getAttribute("id");
+        removeParticularItem(btnParentId);
+      });
+    });
+
+    // Total Amount
+    const totalAmount = () => {
+      const rupee = document.querySelectorAll(".rupee");
+      let total = 0;
+      rupee.forEach((item) => {
+        total += parseFloat(item.value || 0);
+        totalMoney.innerHTML = ` <h1>Rs ${total}</h1>`;
+        passesPayment.value = total;
+        globalTotalAmount = total;
+        paymentType.value = total;
+      });
+      if (rupee.length === 0) {
+        totalMoney.innerHTML = `<h1  id="total-amount">Rs 0</h1>`;
+        passesPayment.value = 0;
+        paymentType.value = 0;
+      }
+    };
+
+    // Adding Event Listener on Rs
+    const rupeeTotalAmount = () => {
+      const rupee = document.querySelectorAll(".rupee");
+      rupee.forEach((item) => {
+        item.addEventListener("input", totalAmount);
+        item.addEventListener("input", () => {
+          if (item.value < 1) {
+            item.value = "";
+            totalMoney.innerHTML = `<h1  id="total-amount">Rs 0</h1>`;
+            passesPayment.value = 0;
+            paymentType.value = 0;
+          }
+        });
+      });
+    };
+
+    rupeeTotalAmount();
+    // Function to add total amount
+    totalAmount();
+  }
+
+  // Adding particular item data ----------------------------------
   const particularArray = [];
   voucherData.particular.map((item) => {
     const feeType = document.querySelector(".fee-type");
     const rsType = document.querySelector(".rs");
-    //  here we convert object to array 
+    //  here we convert object to array
     Object.entries(item).forEach(([key, value]) => {
       // Create particular input
       const particularId = Math.floor(Math.random() * 1000);
@@ -159,17 +253,46 @@ async function editVoucher(voucherData) {
     });
   });
 
+  // Sending data to database ----------------------------
   try {
     const saveVoucherData = viewVoucherForm.querySelector("#saveVoucherData");
 
     saveVoucherData.addEventListener("click", async (event) => {
       event.preventDefault();
 
+      const particularData = [];
+      const particularObject = {};
+
+      let particularName = [];
+      let particularRupee = [];
+
+      // Find all fee-input elements and iterate over them
+      const feeInputs = document.querySelectorAll(".fee-input");
+      feeInputs.forEach((feeInput) => {
+        particularName.push(feeInput.value);
+      });
+
+      // Find all rupee elements and iterate over them
+      const rupeeInputs = document.querySelectorAll(".rupee");
+      rupeeInputs.forEach((rupeeInput) => {
+        particularRupee.push(rupeeInput.value);
+      });
+
+      if (particularName.length === particularRupee.length) {
+        for (let i = 0; i < particularName.length; i++) {
+          particularObject[particularName[i]] = particularRupee[i];
+        }
+      }
+      particularData.push(particularObject);
+
+      // create a array, use to send this array to database for updating the voucher
       const editedVoucherData = [
         {
           voucherNumber: document.getElementById("voucher").value,
           voucherHead: document.getElementById("head").value,
           voucherDate: document.getElementById("date").value,
+          totalAmount: document.getElementById("passes-payment").value,
+          particularData,
         },
       ];
 
@@ -425,8 +548,29 @@ function viewDetails(voucherData) {
       rsType.appendChild(rupeeAddingItem);
     });
   });
+
+  // function to check payment by cash or cheque
+  const selectPaymentMethod = document.getElementById("choose-type");
+  const ifCheque = document.getElementById("if-cheque");
+
+  console.log(voucherData.paymentType);
+  const selectedOption = voucherData.paymentType;
+
+  const choosePaymentType = document.getElementById("choose-type");
+  choosePaymentType.value = selectedOption;
+  if (selectedOption === "Cheque") {
+    const chequeInfo = document.createElement("span");
+    chequeInfo.innerHTML = ` 
+           no <input name="chequeNo"  id="chequeNo"    type="number"/> date 
+           <input name="chequeDate"  id="chequeDate" type="date" class="cheque-date"/> 
+       `;
+    ifCheque.appendChild(chequeInfo);
+  } else {
+    ifCheque.innerHTML = "";
+  }
 }
 
+// >>>>>>>>> Searching Voucher ==========================================
 function searchedUserDataList(data) {
   document.getElementById("searchInput").value = "";
   const tableData = data.success.map((item) => item);
@@ -440,6 +584,7 @@ function searchedUserDataList(data) {
       voucherDate: employee.voucherDate,
       totalAmount: employee.totalAmount,
       particular: employee.particularData,
+      paymentType: employee.paymentType,
     };
 
     const row = document.createElement("tr");

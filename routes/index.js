@@ -174,6 +174,8 @@ router.post("/editvoucher", async (req, res) => {
       const voucher = item.voucherNumber; // VoucherNumber is the existing voucher number
       const head = item.voucherHead;
       const voucherDate = item.voucherDate;
+      const particularData = item.particularData;
+      const totalAmount = item.totalAmount;
 
       const editedVoucher = await User.findOneAndUpdate(
         { voucher }, // Search for the document based on the voucher number
@@ -181,12 +183,14 @@ router.post("/editvoucher", async (req, res) => {
           $set: {
             head,
             voucherDate,
+            particularData,
+            totalAmount,
           },
         },
         { new: true }
       );
 
-      // console.log(editedVoucher);
+      console.log(editedVoucher);
     }
 
     res

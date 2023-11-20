@@ -54,10 +54,9 @@ header {
 }
 
 .nav-links a {
-  color: black;
+  color: white;
   text-decoration: none;
   margin-left: 20px;
-  font-size: 1.1em;
 }
 
 /* Add a hover effect to the links */
@@ -538,15 +537,11 @@ header {
 /* -------------------- preview page --------------------- */
 
 .preview-page {
-  color: #4d3268;
-  background-color: #ffffffc9;
+  background-color: #000000c9;
   border-radius: 3px;
-  padding: 10px 20px;
-  font-size: 15px;
+  padding: 5px 15px;
+  font-size: 13px;
   text-decoration: none;
   font-family: sans-serif;
-}
-
-.preview-page:hover {
-  /* background-color: ; */
+  color: #a49696;
 }
