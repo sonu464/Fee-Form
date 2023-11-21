@@ -15,7 +15,7 @@ async function editVoucher(voucherData) {
                               </div>
                               <div class="institute-name">
                                 <h1>Hindu Institute of Management & Technology</h1>
-                                <h3>ROHTAK - 124001</h3>
+                                <h3>Rohtak - 124001</h3>
                               </div>
                             </div>
                             <div class="top-down">
@@ -33,7 +33,7 @@ async function editVoucher(voucherData) {
                                 </div>
                                 <div class="head-box">
                                   <h4>Head</h4>
-                                  <input value=${voucherData.head} name="head" type="text" id="head" />
+                                  <input value="${voucherData.head}" name="head" type="text" id="head" />
                                 </div>
                               </div>
                               <div class="t-right">
@@ -378,7 +378,6 @@ async function editVoucher(voucherData) {
       });
 
       const editedResponseData = await editedResponse.json();
-      console.log(editedResponseData);
 
       if (editedResponseData.success) {
         const showViewVouceher = document.querySelector(".showViewVouceher");
@@ -446,22 +445,47 @@ async function removeHandler(voucherData) {
         });
 
         const deleteData = await deleteResponse.json();
-        console.log(deleteData);
 
         if (deleteData.success) {
-          console.log("Voucher deleted successfully");
+          const showVoucherUpdated = document.querySelector(
+            ".showVoucherUpdated"
+          );
+          showVoucherUpdated.style.transform = " translate(0, 0)";
 
-          // Redirect to the "preview" page
-          window.location.href = "/preview";
-        } else {
-          console.error("Failed to delete voucher:", deleteData.message);
-          // Handle error scenario, e.g., show an error message
+          // close edited voucher
+          const closeBtn = document.createElement("div");
+          closeBtn.classList.add("editedVoucherCloseBtn");
+          closeBtn.textContent = "X";
+          closeBtn.addEventListener("click", () => {
+            showVoucherUpdated.style.transform = " translate(0, -110%)";
+            window.location.href = "/preview";
+          });
+
+          const styledDiv = document.createElement("div");
+          styledDiv.classList.add("showView");
+
+          const title = document.createElement("h2");
+          title.textContent = `${deleteData.message}`;
+
+          const paragraph = document.createElement("p");
+          paragraph.textContent = `with Voucher No.: ${voucherData.voucher} and voucher head: ${voucherData.head}`;
+
+          // Append the h2 and p elements to the div(styledDiv)
+          styledDiv.appendChild(title);
+          styledDiv.appendChild(paragraph);
+
+          // Append the div to the body
+          showVoucherUpdated.appendChild(styledDiv);
+          showVoucherUpdated.appendChild(closeBtn);
         }
       } else {
-        console.error("Voucher not found for deletion");
-        // Show a message indicating that the voucher was not found
-        showErrorMessage("Voucher not found for deletion");
+        console.error("Failed to delete voucher:", deleteData.message);
+        // Handle error scenario, e.g., show an error message
       }
+    } else {
+      console.error("Voucher not found for deletion");
+      // Show a message indicating that the voucher was not found
+      showErrorMessage("Voucher not found for deletion");
     }
   } catch (error) {
     console.error("Error handling voucher deletion:", error.message);
@@ -470,16 +494,9 @@ async function removeHandler(voucherData) {
   }
 }
 
-// Function to show success messages
-function showSuccessMessage(message) {
-  // Implement your logic to display success messages to the user
-  alert(message); // You can replace this with your custom UI logic
-}
-
-// Function to show error messages
-function showErrorMessage(message) {
-  // Implement your logic to display error messages to the user
-  alert(message); // You can replace this with your custom UI logic
+// Print page
+function printPage() {
+  window.print();
 }
 
 // >>>>>>>>> View Voucher ==========================================
@@ -488,7 +505,7 @@ function viewDetails(voucherData) {
   const viewVoucherForm = document.createElement("form");
   viewVoucherForm.setAttribute("id", "form");
   viewVoucherForm.innerHTML = `
-                        <button onclick="printPage()">Print Page</button>
+                        <button type="button" onclick="printPage()">Print Page</button>
                         <div class="closeVoucher">X</div>
                           <div class="container">
                           <!-- Top-box -->
@@ -499,7 +516,7 @@ function viewDetails(voucherData) {
                               </div>
                               <div class="institute-name">
                                 <h1>Hindu Institute of Management & Technology</h1>
-                                <h3>ROHTAK - 124001</h3>
+                                <h3>Rohtak - 124001</h3>
                               </div>
                             </div>
                             <div class="top-down">
@@ -518,7 +535,7 @@ function viewDetails(voucherData) {
                                 </div>
                                 <div class="head-box">
                                   <h4>Head</h4>
-                                  <input value=${voucherData.head} name="head" type="text" id="head" disabled />
+                                  <input value="${voucherData.head}" name="head" type="text" id="head" disabled />
                                 </div>
                               </div>
                               <div class="t-right">
@@ -597,10 +614,12 @@ function viewDetails(voucherData) {
                             <div class="reci-sign">Signature of Recipient</div>
                           </div>
                         </div>
+                      
 
   `;
   showViewVoucher.appendChild(viewVoucherForm);
   showViewVoucher.style.display = "block";
+
   document.querySelector(".closeVoucher").addEventListener("click", () => {
     showViewVoucher.style.display = "none";
     showViewVoucher.innerHTML = "";
@@ -696,7 +715,12 @@ function searchedUserDataList(data) {
     row
       .querySelector(".removeVoucher")
       .addEventListener("click", async function () {
-        removeHandler(voucherData);
+        const confirmToDelete = confirm("Do you want to delete this voucher");
+        if (confirmToDelete) {
+          removeHandler(voucherData);
+        } else {
+          return;
+        }
       });
 
     // Attach a click event listener to edit voucher

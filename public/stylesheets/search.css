@@ -146,3 +146,45 @@ th {
   color: #484848;
   cursor: pointer;
 }
+
+.saveBtn {
+  width: 50% !important;
+}
+
+.fee-type {
+  height: auto !important;
+}
+
+@media print {
+  body * {
+    display: none;
+  }
+
+  .closeVoucher * {
+    display: none !important;
+  }
+
+  .container * {
+    display: flex !important;
+  }
+
+  .fee-type {
+    display: flex;
+    flex-direction: column;
+  }
+  .rs {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rs-box {
+    display: flex;
+    flex-direction: column;
+  }
+  .rs-box > h5 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}

@@ -6,9 +6,15 @@ const paymentType = document.getElementById("payment-type");
 const rsType = document.getElementById("rs-type");
 const feeType = document.getElementById("fee-type");
 const voucherNo = document.getElementById("voucher");
+const voucherDate = document.getElementById("date");
 
 let globalTotalAmount = 0;
 let particularArray = [];
+
+// set voucher date automatically with current date
+const currentDate = new Date();
+const currentVoucherDate = currentDate.toISOString().slice(0, 10);
+voucherDate.value = currentVoucherDate;
 
 voucherNo.addEventListener("change", () => {
   if (voucherNo.value.trim() < 1) {
@@ -131,6 +137,19 @@ function checkVoucherNumber(data) {
 
     if (voucherNumbers.length < 1) {
       voucherNo.value = 1;
+      voucherNo.addEventListener("change", () => {
+        const voucherBox = document.querySelector(".voucher-box");
+        const voucherAlertDiv = document.createElement("div");
+        voucherAlertDiv.id = "voucherNoAlert";
+        voucherAlertDiv.className = "voucherNo-alert";
+        voucherAlertDiv.textContent = `please don't try to change this field `;
+        voucherNo.value = 1;
+        voucherBox.appendChild(voucherAlertDiv);
+
+        setInterval(() => {
+          voucherAlertDiv.style.display = "none";
+        }, 2000);
+      });
     } else {
       const nextVoucherValue = Math.max(...voucherNumbers);
       voucherNo.value = nextVoucherValue + 1;
@@ -140,11 +159,11 @@ function checkVoucherNumber(data) {
         const voucherAlertDiv = document.createElement("div");
         voucherAlertDiv.id = "voucherNoAlert";
         voucherAlertDiv.className = "voucherNo-alert";
-        voucherAlertDiv.textContent = `please do not change this field `;
+        voucherAlertDiv.textContent = `please don't try to change this field `;
         voucherNo.value = nextVoucherValue + 1;
         voucherBox.appendChild(voucherAlertDiv);
 
-        setInterval(() => {
+        setTimeout(() => {
           voucherAlertDiv.style.display = "none";
         }, 2000);
       });
