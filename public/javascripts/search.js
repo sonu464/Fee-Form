@@ -1,5 +1,6 @@
 // >>>>>>>>> Edit voucher ==========================================
 async function editVoucher(voucherData) {
+  console.log(voucherData);
   const showViewVoucher = document.querySelector(".showViewVouceher");
   const viewVoucherForm = document.createElement("form");
   viewVoucherForm.setAttribute("id", "form");
@@ -132,12 +133,17 @@ async function editVoucher(voucherData) {
 
   const choosePaymentType = document.getElementById("choose-type");
   choosePaymentType.value = selectedOption;
+
   if (selectedOption === "Cheque") {
     const chequeInfo = document.createElement("span");
     chequeInfo.innerHTML = ` 
-           no <input name="chequeNo"  id="chequeNo" value="${voucherData.chequeNo}"   type="number"  /> date 
-           <input name="chequeDate"  id="chequeDate" value="${voucherData.chequeDate}" type="date" class="cheque-date"  /> 
-       `;
+     no <input name="chequeNo"  id="chequeNo" value="${
+       voucherData.chequeNo || ""
+     }"   type="number"  /> date 
+     <input name="chequeDate"  id="chequeDate" value="${
+       voucherData.chequeDate || ""
+     }" type="date" class="cheque-date"  /> 
+  `;
     ifCheque.appendChild(chequeInfo);
   }
 
@@ -494,7 +500,7 @@ async function removeHandler(voucherData) {
   }
 }
 
-// Print page
+// Print page ===============================
 function printPage() {
   window.print();
 }
@@ -505,7 +511,7 @@ function viewDetails(voucherData) {
   const viewVoucherForm = document.createElement("form");
   viewVoucherForm.setAttribute("id", "form");
   viewVoucherForm.innerHTML = `
-                        <button type="button" onclick="printPage()">Print Page</button>
+                        <button type="button" onclick="printPage()" class="printBtn">Print Page</button>
                         <div class="closeVoucher">X</div>
                           <div class="container">
                           <!-- Top-box -->
@@ -661,7 +667,6 @@ function viewDetails(voucherData) {
   //check payment by cash or cheque
   const ifCheque = document.getElementById("if-cheque");
   const selectedOption = voucherData.paymentType;
-
   const choosePaymentType = document.getElementById("choose-type");
   choosePaymentType.value = selectedOption;
   if (selectedOption === "Cheque") {
@@ -678,7 +683,6 @@ function viewDetails(voucherData) {
 
 // >>>>>>>>> Searching Voucher ==========================================
 function searchedUserDataList(data) {
-  document.getElementById("searchInput").value = "";
   const tableData = data.success.map((item) => item);
 
   const tableBody = document.querySelector("#employeeTable tbody");
@@ -695,45 +699,60 @@ function searchedUserDataList(data) {
       chequeNo: employee.chequeNo,
     };
 
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${employee.voucher}</td>
-      <td>${employee.voucherDate}</td>
-      <td>${employee.head}</td>
-      <td><button class="singleVoucher">View</button></td>
-      <td><button class="editVoucher">Edit</button></td>
-      <td ><button class="removeVoucher">Delete</button></td>
-    `;
-    tableBody.appendChild(row);
+    // Check if the voucher is already in the table
+    const existingVoucherRow = tableBody.querySelector(
+      `[data-voucher="${employee.voucher}"]`
+    );
 
-    // Attach a click event listener to view voucher
-    row.querySelector(".singleVoucher").addEventListener("click", function () {
-      viewDetails(voucherData);
-    });
+    if (!existingVoucherRow) {
+      const row = document.createElement("tr");
+      row.dataset.voucher = employee.voucher; // Add a data attribute for tracking
 
-    // Attach a click event listener to delete voucher
-    row
-      .querySelector(".removeVoucher")
-      .addEventListener("click", async function () {
-        const confirmToDelete = confirm("Do you want to delete this voucher");
-        if (confirmToDelete) {
-          removeHandler(voucherData);
-        } else {
-          return;
-        }
+      row.innerHTML = `
+        <td>${employee.voucher}</td>
+        <td>${employee.voucherDate}</td>
+        <td>${employee.head}</td>
+        <td><button class="singleVoucher">View</button></td>
+        <td><button class="editVoucher">Edit</button></td>
+        <td><button class="removeVoucher">Delete</button></td>
+      `;
+
+      tableBody.appendChild(row);
+
+      // Attach a click event listener to view voucher
+      row
+        .querySelector(".singleVoucher")
+        .addEventListener("click", function () {
+          viewDetails(voucherData);
+        });
+
+      // Attach a click event listener to delete voucher
+      row
+        .querySelector(".removeVoucher")
+        .addEventListener("click", async function () {
+          const confirmToDelete = confirm("Do you want to delete this voucher");
+          if (confirmToDelete) {
+            removeHandler(voucherData);
+          } else {
+            return;
+          }
+        });
+
+      // Attach a click event listener to edit voucher
+      row.querySelector(".editVoucher").addEventListener("click", function () {
+        editVoucher(voucherData);
       });
-
-    // Attach a click event listener to edit voucher
-    row.querySelector(".editVoucher").addEventListener("click", function () {
-      editVoucher(voucherData);
-    });
+    }
   });
+
+  document.getElementById("searchInput").value = "";
 }
 
 // >>>>>>>>>  Voucher Data ==========================================
 async function fetchData() {
+  document.getElementById("searchInput").value = "";
   try {
-    const response = await fetch("http://localhost:3000/sercheditem", {
+    const response = await fetch("/sercheditem", {
       method: "GET",
     });
 

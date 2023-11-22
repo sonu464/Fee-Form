@@ -19,13 +19,19 @@ async function getData() {
       }
 
       const searchedType = document.getElementById("searchedType");
+
       optionsData.forEach((option) => {
         const optionId = Math.floor(Math.random() * 10000);
         const optionElement = document.createElement("option");
         optionElement.setAttribute("id", optionId);
-        optionElement.value = option.value;
-        optionElement.text = option.text;
-        searchedType.appendChild(optionElement);
+        const existingOptionValue = option.value;
+        if (
+          !searchedType.querySelector(`option[value="${existingOptionValue}"]`)
+        ) {
+          optionElement.value = option.value;
+          optionElement.text = option.text;
+          searchedType.appendChild(optionElement);
+        }
       });
 
       searchedType.addEventListener("change", () => {

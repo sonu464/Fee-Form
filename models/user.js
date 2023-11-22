@@ -1,29 +1,26 @@
 const mongoose = require("mongoose");
+const flash = require("connect-flash");
 
 // setup
-mongoose
-  .connect("mongodb://127.0.0.1:27017/HimtData")
-  .then(() => {
-    console.log("Connected to backend");
-  })
-  .catch((error) => {
-    console.log("Not connected");
-  });
-
 // mongoose
-//   .connect(
-//     "mongodb+srv://9416sonusaini:bidu@cluster0.igkqpp7.mongodb.net/HimtVoucherData?retryWrites=true&w=majority",
-//     {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true,
-//     }
-//   )
+//   .connect("mongodb://127.0.0.1:27017/HimtData")
 //   .then(() => {
-//     console.log("Connected to MongoDB");
+//     console.log("Connected to backend");
 //   })
-//   .catch((err) => {
-//     console.log("Not connected to MongoDB");
+//   .catch((error) => {
+//     console.log("Not connected");
 //   });
+
+mongoose
+  .connect(
+    "mongodb+srv://bidu:bidumongo@cluster0.z8ql8z4.mongodb.net/HimtVoucher?retryWrites=true&w=majority"
+  )
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((err) => {
+    console.log("Not connected to MongoDB");
+  });
 
 // create schema
 const userSchema = mongoose.Schema({

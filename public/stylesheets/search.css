@@ -151,8 +151,14 @@ th {
   width: 50% !important;
 }
 
-.fee-type {
-  height: auto !important;
+.printBtn {
+  padding: 10px 15px;
+  border-radius: 2px;
+  border: none;
+  background-color: #0074d0;
+  color: white;
+  box-shadow: 0px 0px 8px -1px #00000080;
+  cursor: pointer;
 }
 
 @media print {
@@ -160,7 +166,7 @@ th {
     display: none;
   }
 
-  .closeVoucher * {
+  .closeVoucher {
     display: none !important;
   }
 
@@ -171,6 +177,7 @@ th {
   .fee-type {
     display: flex;
     flex-direction: column;
+    height: auto !important;
   }
   .rs {
     display: flex;

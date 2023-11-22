@@ -39,12 +39,12 @@ router.post("/search", async (req, res) => {
         emptyMessage: "Please fill in all required fields.",
       });
     } else {
+      req.flash("success", null);
       const results = await User.find({
         $or: [
           { head: new RegExp(searchInput, "i") },
           { totalAmount: new RegExp(searchInput, "i") },
           { voucherDate: new RegExp(searchInput, "i") },
-          // { voucher: new RegExp(searchInput, "i") },
         ],
       });
       req.flash("success", results);
@@ -53,11 +53,19 @@ router.post("/search", async (req, res) => {
   } catch (error) {
     console.error(error);
     req.flash("error", "Internal Server Error. Please try again later.");
+
+    // Render the "preview" view with an error message
     res.status(500).render("preview", {
-      emptyMessage: "There is no data related to you query",
+      emptyMessage: "There is no data related to your query",
     });
   }
 });
+
+function sendErrorToFrontend() {
+  app.get("/", (req, res) => {
+    res.status(500).render("voucher", { errorMessage: "you are offline" });
+  });
+}
 
 router.post("/", async function (req, res) {
   try {
@@ -159,7 +167,7 @@ router.post("/remove", async (req, res) => {
 // Edit voucher
 router.post("/editvoucher", async (req, res) => {
   const editedVoucherData = req.body.editedVoucherData;
-
+  console.log(editedVoucherData);
   try {
     for (const item of editedVoucherData) {
       const voucher = item.voucherNumber; // VoucherNumber is the existing voucher number

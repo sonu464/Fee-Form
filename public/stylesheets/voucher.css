@@ -75,9 +75,11 @@ header {
 }
 
 .error-message {
-  color: black;
-  font-weight: bold;
-  font-size: 15px;
+  background-color: #ff8888;
+  padding: 6px 10px;
+  font-size: 13px !important;
+  color: #da0000 !important;
+  border-radius: 2px;
 }
 
 /* ---------------- Main-Container ---------------- */
@@ -353,7 +355,7 @@ header {
 }
 
 .total-value h1 {
-  text-align: start;
+  /* text-align: start; */
   font-size: 20px;
   font-family: auto;
   padding: 0 10px;
