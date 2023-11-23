@@ -11,6 +11,10 @@ const voucherDate = document.getElementById("date");
 let globalTotalAmount = 0;
 let particularArray = [];
 
+passesPayment.addEventListener("change", () => {
+  passesPayment.value = paymentType.value;
+});
+
 // set voucher date automatically with current date
 const currentDate = new Date();
 const currentVoucherDate = currentDate.toISOString().slice(0, 10);

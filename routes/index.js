@@ -61,12 +61,6 @@ router.post("/search", async (req, res) => {
   }
 });
 
-function sendErrorToFrontend() {
-  app.get("/", (req, res) => {
-    res.status(500).render("voucher", { errorMessage: "you are offline" });
-  });
-}
-
 router.post("/", async function (req, res) {
   try {
     const {

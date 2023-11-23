@@ -45,7 +45,7 @@ const userSchema = mongoose.Schema({
     type: String,
   },
   chequeNo: {
-    type: String,
+    type: Number,
   },
   particularData: {
     type: Object,

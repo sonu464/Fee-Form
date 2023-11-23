@@ -1,6 +1,5 @@
 // >>>>>>>>> Edit voucher ==========================================
 async function editVoucher(voucherData) {
-  console.log(voucherData);
   const showViewVoucher = document.querySelector(".showViewVouceher");
   const viewVoucherForm = document.createElement("form");
   viewVoucherForm.setAttribute("id", "form");
@@ -314,6 +313,39 @@ async function editVoucher(voucherData) {
     }
   });
 
+  let chequeDate;
+  let chequeNo;
+  choosePaymentType.addEventListener("change", () => {
+    if (choosePaymentType.value === "Cheque") {
+      const chequeInfo = document.createElement("span");
+      chequeInfo.innerHTML = ` 
+           no <input name="chequeNo"  id="chequeNo" value="${
+             voucherData.chequeNo || ""
+           }"   type="number"  /> date 
+           <input name="chequeDate"  id="chequeDate" value="${
+             voucherData.chequeDate | ""
+           }" type="date" class="cheque-date"  /> 
+       `;
+      ifCheque.appendChild(chequeInfo);
+    } else {
+      chequeDate = "";
+      chequeNo = "";
+    }
+  });
+
+  if (document.getElementById("choose-type").value === "Cash") {
+    chequeDate = "";
+    chequeNo = "";
+  } else if (document.getElementById("choose-type").value === "Cheque") {
+    document.querySelector("#chequeNo").addEventListener("change", () => {
+      chequeNo = document.getElementById("chequeNo").value;
+    });
+
+    document.querySelector("#chequeDate").addEventListener("change", () => {
+      chequeDate = document.getElementById("chequeDate").value;
+    });
+  }
+
   // Sending data to database ----------------------------
   try {
     const saveVoucherData = viewVoucherForm.querySelector("#saveVoucherData");
@@ -345,19 +377,6 @@ async function editVoucher(voucherData) {
         }
       }
       particularData.push(particularObject);
-
-      let chequeNo;
-      let chequeDate;
-      const type = document.getElementById("choose-type").value;
-      if (type === "cheque") {
-        chequeNo = document.getElementById("chequeNo").value;
-        chequeDate = document.getElementById("chequeDate").value;
-      } else {
-        chequeNo = "";
-        chequeDate = "";
-      }
-
-      console.log(chequeDate, "and", chequeNo);
 
       // create a array, use to send this array to database for updating the voucher
       const editedVoucherData = [
