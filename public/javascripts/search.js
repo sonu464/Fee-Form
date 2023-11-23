@@ -4,7 +4,7 @@ async function editVoucher(voucherData) {
   const viewVoucherForm = document.createElement("form");
   viewVoucherForm.setAttribute("id", "form");
   viewVoucherForm.innerHTML = `
-                        <button onclick="printPage()">Print Page</button>
+                        <button class="printBtn" onclick="printPage()">Print Page</button>
                         <div class="closeVoucher">X</div>
                           <div class="container">
                           <!-- Top-box -->
@@ -126,26 +126,6 @@ async function editVoucher(voucherData) {
     showViewVoucher.innerHTML = "";
   });
 
-  // cheque data filled to form ----------------------------
-  const ifCheque = document.getElementById("if-cheque");
-  const selectedOption = voucherData.paymentType;
-
-  const choosePaymentType = document.getElementById("choose-type");
-  choosePaymentType.value = selectedOption;
-
-  if (selectedOption === "Cheque") {
-    const chequeInfo = document.createElement("span");
-    chequeInfo.innerHTML = ` 
-     no <input name="chequeNo"  id="chequeNo" value="${
-       voucherData.chequeNo || ""
-     }"   type="number"  /> date 
-     <input name="chequeDate"  id="chequeDate" value="${
-       voucherData.chequeDate || ""
-     }" type="date" class="cheque-date"  /> 
-  `;
-    ifCheque.appendChild(chequeInfo);
-  }
-
   // Adding particulars to voucher ----------------------------
   function addingVoucherParticular() {
     const paymentType = document.getElementById("payment-type");
@@ -160,9 +140,9 @@ async function editVoucher(voucherData) {
     particularAddingItem.setAttribute("id", particularId);
     particularAddingItem.classList.add("feeOptions");
     particularAddingItem.innerHTML = ` 
-              <input  class="fee-input" type="text" name="particular" /> 
-              <button class="particular-delete">X</button> 
-           `;
+                <input  class="fee-input" type="text" name="particular" /> 
+                <button class="particular-delete">X</button> 
+             `;
 
     particularArray.push(particularAddingItem);
     // Adding rupee box
@@ -171,8 +151,8 @@ async function editVoucher(voucherData) {
     rupeeAddingItem.setAttribute("id", particularId);
     rupeeAddingItem.classList.add("rsOptions");
     rupeeAddingItem.innerHTML = ` 
-              <input type="number" class="rupee" minlength="0" name="rupee" /> 
-         `;
+                <input type="number" class="rupee" minlength="0" name="rupee" /> 
+           `;
 
     rsType.appendChild(rupeeAddingItem);
     feeType.appendChild(particularAddingItem);
@@ -237,7 +217,6 @@ async function editVoucher(voucherData) {
     // Function to add total amount
     totalAmount();
   }
-
   const addParticular = document.getElementById("add-particular");
   addParticular.addEventListener("click", addingVoucherParticular);
 
@@ -255,8 +234,8 @@ async function editVoucher(voucherData) {
       particularAddingItem.classList.add("feeOptions");
 
       particularAddingItem.innerHTML = `
-        <input value="${key}" class="fee-input" type="text" />
-      `;
+          <input value="${key}" class="fee-input" type="text" />
+        `;
 
       particularArray.push(particularAddingItem);
       feeType.appendChild(particularAddingItem);
@@ -268,13 +247,14 @@ async function editVoucher(voucherData) {
       rupeeAddingItem.classList.add("rsOptions");
 
       rupeeAddingItem.innerHTML = `
-        <input value="${value}" type="number" class="rupee" minlength="0" name="rupee" />
-      `;
+          <input value="${value}" type="number" class="rupee" minlength="0" name="rupee" />
+        `;
 
       rsType.appendChild(rupeeAddingItem);
     });
   });
 
+  // total amount, passed amount
   document.querySelectorAll(".rupee").forEach((item) => {
     item.addEventListener("input", () => {
       const paymentType = document.getElementById("payment-type");
@@ -294,49 +274,27 @@ async function editVoucher(voucherData) {
     });
   });
 
-  document.getElementById("choose-type").addEventListener("change", () => {
-    const selectPaymentMethod = document.getElementById("choose-type");
-    const ifCheque = document.getElementById("if-cheque");
-    const selectedOption = selectPaymentMethod.value;
-
-    const choosePaymentType = document.getElementById("choose-type");
-    choosePaymentType.value = selectedOption;
-    if (selectedOption === "Cheque") {
-      const chequeInfo = document.createElement("span");
-      chequeInfo.innerHTML = ` 
-           no <input name="chequeNo"  id="chequeNo" value="${voucherData.chequeNo}"   type="number"  /> date 
-           <input name="chequeDate"  id="chequeDate" value="${voucherData.chequeDate}" type="date" class="cheque-date"  /> 
-       `;
-      ifCheque.appendChild(chequeInfo);
-    } else {
-      ifCheque.innerHTML = "";
-    }
-  });
+  // cheque data filled to form ----------------------------
+  const ifCheque = document.getElementById("if-cheque");
+  const selectedOption = voucherData.paymentType;
+  const choosePaymentType = document.getElementById("choose-type");
+  choosePaymentType.value = selectedOption;
 
   let chequeDate;
   let chequeNo;
-  choosePaymentType.addEventListener("change", () => {
-    if (choosePaymentType.value === "Cheque") {
-      const chequeInfo = document.createElement("span");
-      chequeInfo.innerHTML = ` 
-           no <input name="chequeNo"  id="chequeNo" value="${
-             voucherData.chequeNo || ""
-           }"   type="number"  /> date 
-           <input name="chequeDate"  id="chequeDate" value="${
-             voucherData.chequeDate | ""
-           }" type="date" class="cheque-date"  /> 
-       `;
-      ifCheque.appendChild(chequeInfo);
-    } else {
-      chequeDate = "";
-      chequeNo = "";
-    }
-  });
 
-  if (document.getElementById("choose-type").value === "Cash") {
-    chequeDate = "";
-    chequeNo = "";
-  } else if (document.getElementById("choose-type").value === "Cheque") {
+  if (selectedOption === "Cheque") {
+    const chequeInfo = document.createElement("span");
+    chequeInfo.innerHTML = ` 
+     no <input name="chequeNo"  id="chequeNo" value="${
+       voucherData.chequeNo || ""
+     }"   type="number"  /> date 
+     <input name="chequeDate"  id="chequeDate" value="${
+       voucherData.chequeDate || ""
+     }" type="date" class="cheque-date"  /> 
+  `;
+    ifCheque.appendChild(chequeInfo);
+
     document.querySelector("#chequeNo").addEventListener("change", () => {
       chequeNo = document.getElementById("chequeNo").value;
     });
@@ -344,7 +302,30 @@ async function editVoucher(voucherData) {
     document.querySelector("#chequeDate").addEventListener("change", () => {
       chequeDate = document.getElementById("chequeDate").value;
     });
+  } else {
+    ifCheque.innerHTML = "";
   }
+
+  choosePaymentType.addEventListener("change", () => {
+    if (choosePaymentType.value === "Cheque") {
+      const chequeInfo = document.createElement("span");
+      chequeInfo.innerHTML = ` 
+           no <input name="chequeNo"  id="chequeNo"  type="number"  /> date 
+           <input name="chequeDate"  id="chequeDate"  type="date" class="cheque-date"  /> 
+       `;
+      ifCheque.appendChild(chequeInfo);
+
+      document.querySelector("#chequeNo").addEventListener("change", () => {
+        chequeNo = document.getElementById("chequeNo").value;
+      });
+
+      document.querySelector("#chequeDate").addEventListener("change", () => {
+        chequeDate = document.getElementById("chequeDate").value;
+      });
+    } else {
+      ifCheque.innerHTML = "";
+    }
+  });
 
   // Sending data to database ----------------------------
   try {
@@ -419,6 +400,9 @@ async function editVoucher(voucherData) {
         closeBtn.addEventListener("click", () => {
           showVoucherUpdated.style.transform = " translate(0, -110%)";
           window.location.href = "/preview";
+          document.querySelector(".preview-container").innerHTML = "";
+          document.querySelector(".preview-container").textContent =
+            "Loading...";
         });
 
         const styledDiv = document.createElement("div");
@@ -429,7 +413,7 @@ async function editVoucher(voucherData) {
 
         const paragraph = document.createElement("p");
         paragraph.textContent =
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+          "Voucher is updated accourding to your requirement";
 
         // Append the h2 and p elements to the div(styledDiv)
         styledDiv.appendChild(title);
@@ -484,6 +468,9 @@ async function removeHandler(voucherData) {
           closeBtn.addEventListener("click", () => {
             showVoucherUpdated.style.transform = " translate(0, -110%)";
             window.location.href = "/preview";
+            document.querySelector(".preview-container").innerHTML = "";
+            document.querySelector(".preview-container").textContent =
+              "Loading...";
           });
 
           const styledDiv = document.createElement("div");

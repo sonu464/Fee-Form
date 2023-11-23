@@ -61,6 +61,11 @@ router.post("/search", async (req, res) => {
   }
 });
 
+router.get("/voucher/print", async (req, res) => {
+  const registered = req.flash();
+  res.send(registered);
+});
+
 router.post("/", async function (req, res) {
   try {
     const {
@@ -125,6 +130,7 @@ router.post("/", async function (req, res) {
     });
 
     const registered = await userData.save();
+    req.flash("success", registered);
 
     req.flash("newVoucher", voucher);
     req.flash("userData", userData);

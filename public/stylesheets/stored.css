@@ -5,6 +5,7 @@
 
 body {
   font-family: sans-serif;
+  background-color: white;
 }
 
 .dataStored {
@@ -43,5 +44,16 @@ body {
   background-color: rgb(228, 201, 255);
 }
 .voucherBtns > a:active {
+  color: rebeccapurple;
+}
+
+#printButton {
+  background-color: white;
+  text-decoration: none;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 2px;
+  text-align: center;
+  border: none;
   color: rebeccapurple;
 }

@@ -162,36 +162,15 @@ th {
 }
 
 @media print {
-  body * {
-    display: none;
-  }
-
   .closeVoucher {
     display: none !important;
   }
 
-  .container * {
-    display: flex !important;
+  .printBtn {
+    display: none !important;
   }
 
   .fee-type {
-    display: flex;
-    flex-direction: column;
     height: auto !important;
-  }
-  .rs {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .rs-box {
-    display: flex;
-    flex-direction: column;
-  }
-  .rs-box > h5 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
   }
 }
