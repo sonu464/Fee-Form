@@ -11,6 +11,24 @@ const voucherDate = document.getElementById("date");
 let globalTotalAmount = 0;
 let particularArray = [];
 
+// Adding an validation on some field
+const headField = document.getElementById("head");
+headField.addEventListener("blur", () => {
+  console.log("done");
+  const headMainDiv = document.querySelector(".head-box");
+  const headError = document.createElement("div");
+  if (headField.value.trim() === "") {
+    headError.textContent = "Enter a valid head field!";
+    headError.className = "validationError";
+    headMainDiv.appendChild(headError);
+  } else {
+    const existingError = headMainDiv.querySelector(".validationError");
+    if (existingError) {
+      headMainDiv.removeChild(existingError);
+    }
+  }
+});
+
 passesPayment.addEventListener("change", () => {
   passesPayment.value = paymentType.value;
 });
@@ -36,6 +54,25 @@ const checkMethod = () => {
          <input name="chequeDate"  id="chequeDate" type="date" class="cheque-date"/> 
      `;
     ifCheque.appendChild(chequeInfo);
+
+    const bottomBox = document.querySelector(".bottom-box");
+    const chequeValid = document.querySelector("#chequeNo");
+    chequeValid.addEventListener("blur", () => {
+      const errorMessage = document.createElement("div");
+      if (chequeValid.value.trim() === "") {
+        errorMessage.textContent = "Enter a valid cheque no.!";
+        errorMessage.className = "validationChequeError";
+        bottomBox.appendChild(errorMessage);
+        bottomBox.insertBefore(errorMessage, bottomBox.firstChild);
+      } else {
+        const existingChequeNoError = document.querySelector(
+          ".validationChequeError"
+        );
+        if (existingChequeNoError) {
+          bottomBox.removeChild(existingChequeNoError);
+        }
+      }
+    });
   } else {
     ifCheque.innerHTML = "";
   }
